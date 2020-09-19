@@ -1,11 +1,10 @@
-import { API_URL } from '../source/config';
+// import { API_URL } from '../source/config';
 
-function Home({ message }) {
-    console.log(message);
+function Home() {
     return <h1>Hello, world!</h1>;
 }
 
-export async function getServerSideProps() {
+/* export async function getServerSideProps() {
     const res = await fetch(`${API_URL}/api/admin`);
     const message = await res.json();
 
@@ -14,6 +13,6 @@ export async function getServerSideProps() {
             message,
         },
     };
-}
+} */
 
 export default Home;

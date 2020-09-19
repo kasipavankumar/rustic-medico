@@ -12,3 +12,4 @@ admin-client/.next
 
 # Server
 server/node_modules
+server/scripts
