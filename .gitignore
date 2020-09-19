@@ -1,0 +1,14 @@
+# Misc
+.vscode/*
+
+**/*.env
+
+# Root
+node_modules
+
+# Admin Client
+admin-client/node_modules
+admin-client/.next
+
+# Server
+server/node_modules

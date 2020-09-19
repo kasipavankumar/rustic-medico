@@ -1,0 +1,29 @@
+{
+    "name": "admin-client",
+    "version": "0.1.0",
+    "description": "Admin facing client application of Rustic Medico.",
+    "main": "index.js",
+    "author": "Various Authors",
+    "license": "MIT",
+    "homepage": "https://github.com/kasipavankumar/rustic-medico#readme",
+    "private": "true",
+    "proxy": "http://localhost:5000",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kasipavankumar/rustic-medico.git"
+    },
+    "bugs": {
+        "url": "https://github.com/kasipavankumar/rustic-medico/issues"
+    },
+    "scripts": {
+        "build": "next build",
+        "dev": "next dev",
+        "start": "next start",
+        "clean": "rm --recursive --verbose .next"
+    },
+    "dependencies": {
+        "next": "^9.5.3",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    }
+}

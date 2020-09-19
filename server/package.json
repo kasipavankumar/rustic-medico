@@ -1,0 +1,29 @@
+{
+  "name": "rustic-medico-server",
+  "version": "0.1.0",
+  "description": "Web server for the Rustic Medico.",
+  "main": "source/server.js",
+  "author": "Various Authors",
+  "repository": "https://github.com/kasipavankumar/rustic-medico",
+  "bugs": "https://github.com/kasipavankumar/rustic-medico/issues",
+  "license": "MIT",
+  "private": "true",
+  "engines": {
+    "node": "12.x.x"
+  },
+  "scripts": {
+    "dev": "nodemon source/server.js",
+    "start": "node source/server.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
