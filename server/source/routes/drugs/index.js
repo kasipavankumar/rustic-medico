@@ -1,11 +1,14 @@
 const { Router } = require('express');
-const pool = require('../../database');
+const DrugsCreationManager = require('../../controllers/drugs/drugsCreationManager');
+const DrugsQueryManager = require('../../controllers/drugs/drugsQueryManager');
 
 const DrugsRouter = Router();
+const drugsQueryManager = new DrugsQueryManager();
+const drugsCreationManager = new DrugsCreationManager();
 
-DrugsRouter.get('/get/all', async (req, res) => {
-    const { rows } = await pool.query('select * from employees;');
-    res.status(200).json({ employees: rows });
-});
+DrugsRouter.get('/get/all', drugsQueryManager.getAllDrugs);
+DrugsRouter.get('/get/one', drugsQueryManager.getOneDrug);
+
+DrugsRouter.post('/add/one', drugsCreationManager.addDrug);
 
 module.exports = DrugsRouter;
