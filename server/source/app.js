@@ -13,6 +13,6 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/admin/drugs/', require('./routes/drugs'));
+app.use('/api/admin/drugs', require('./routes/drugs'));
 
 module.exports = app;
