@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const DrugsCreationManager = require('../../controllers/drugs/drugsCreationManager');
-const DrugsQueryManager = require('../../controllers/drugs/drugsQueryManager');
+const QueryController = require('../../controllers/query/queryController');
 
 const DrugsRouter = Router();
-const drugsQueryManager = new DrugsQueryManager();
 const drugsCreationManager = new DrugsCreationManager();
+const queryController = new QueryController('drugs');
 
-DrugsRouter.get('/get/all', drugsQueryManager.getAllDrugs);
-DrugsRouter.get('/get/one', drugsQueryManager.getOneDrug);
+DrugsRouter.get('/get/all', queryController.getAll);
+DrugsRouter.get('/get/one', queryController.getOne);
 
 DrugsRouter.post('/add/one', drugsCreationManager.addDrug);
 
