@@ -22,11 +22,11 @@ class InsertionController {
 
             const result = await pool.query(statement, params);
 
-            if (result.command === 'INSERT' || !result.rowCount === 1) {
-                res.status(StatusCodes.OK).json({ msg: `inserted ${singularQuerySourceName}` });
+            if (result.rowCount !== 1) {
+                res.status(StatusCodes.BAD_REQUEST).json({ msg: `cannot insert ${singularQuerySourceName}` });
             }
 
-            return res.status(StatusCodes.BAD_REQUEST).end();
+            res.status(StatusCodes.OK).json({ msg: `inserted ${singularQuerySourceName}` });
         } catch (err) {
             console.error(err);
 
