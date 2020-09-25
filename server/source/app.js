@@ -18,5 +18,6 @@ app.use('/api/admin/drugs', ensureAdminAuthentication, require('./routes/drugs')
 app.use('/api/admin/employees', ensureAdminAuthentication, require('./routes/employees'));
 app.use('/api/admin/manufacturers', ensureAdminAuthentication, require('./routes/manufacturers'));
 app.use('/api/admin/customers', ensureAdminAuthentication, require('./routes/customers'));
+app.use('/api/admin/doctors', ensureAdminAuthentication, require('./routes/doctors'));
 
 module.exports = app;
