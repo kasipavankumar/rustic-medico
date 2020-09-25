@@ -18,8 +18,6 @@ class Validation {
             const attributesFromClient = req.body[singularizedQueryResource];
             const columns = await DatabaseHelpers.getColumnNamesList(this.queryResource);
 
-            console.log(attributesFromClient, singularizedQueryResource, columns);
-
             const valid = Object.keys(attributesFromClient).every((attribute) => columns.includes(attribute));
 
             if (!valid) {
