@@ -1,5 +1,6 @@
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
-const queryResourceValid = require('../../helpers/queryResourceValidator');
+// const queryResourceValid = require('../../helpers/queryResourceValidator');
+const queryResourceValid = require('../../helpers/query/queryResourceValidator');
 const pool = require('../../database');
 
 class QueryController {

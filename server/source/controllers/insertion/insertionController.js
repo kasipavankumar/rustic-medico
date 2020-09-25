@@ -1,6 +1,6 @@
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const pluralize = require('pluralize');
-const queryResourceValid = require('../../helpers/queryResourceValidator');
+const queryResourceValid = require('../../helpers/query/queryResourceValidator');
 const InsertionHelpers = require('../../helpers/insertion/insertionHelpers');
 const pool = require('../../database');
 
