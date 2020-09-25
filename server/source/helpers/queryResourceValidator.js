@@ -1,4 +1,4 @@
-const queryResources = {
+const availableQueryResources = {
     drugs: 'drugs',
     employees: 'employees',
     drug_manufacturers: 'drug_manufacturers',
@@ -7,4 +7,4 @@ const queryResources = {
     doctors: 'doctors',
 };
 
-module.exports = queryResources;
+module.exports = (queryResource) => !!Object.keys(availableQueryResources).includes(queryResource);

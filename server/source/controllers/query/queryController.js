@@ -1,5 +1,5 @@
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
-const queryResources = require('../../utils/queryResources');
+const queryResourceValid = require('../../helpers/queryResourceValidator');
 const pool = require('../../database');
 
 class QueryController {
@@ -10,15 +10,10 @@ class QueryController {
     constructor(queryResource) {
         this.queryResource = queryResource;
 
-        if (!this.validQueryResource()) {
+        if (!queryResourceValid(this.queryResource)) {
             throw new Error('invalid query resource');
         }
     }
-
-    /**
-     * Checks if `queryResource` is valid.
-     */
-    validQueryResource = () => !!Object.keys(queryResources).includes(this.queryResource);
 
     /**
      * Query database for all records for given queryResource.
