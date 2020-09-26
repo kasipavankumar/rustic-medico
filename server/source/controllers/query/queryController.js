@@ -35,6 +35,12 @@ class QueryController {
             return res.status(StatusCodes.OK).json({ [this.queryResource]: rows });
         } catch (err) {
             console.error(err);
+
+            // Table doesn't exist
+            if (err.code === '42P01') {
+                return res.status(StatusCodes.BAD_REQUEST).json({ err: ReasonPhrases.BAD_REQUEST, msg: 'query resource does not exists' });
+            }
+
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: ReasonPhrases.INTERNAL_SERVER_ERROR });
         }
     };
