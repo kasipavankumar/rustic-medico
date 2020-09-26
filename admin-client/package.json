@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "Admin facing client application of Rustic Medico.",
     "main": "index.js",
-    "author": "Various Authors",
+    "author": "Team Delta",
     "license": "MIT",
     "homepage": "https://github.com/kasipavankumar/rustic-medico#readme",
     "private": "true",
