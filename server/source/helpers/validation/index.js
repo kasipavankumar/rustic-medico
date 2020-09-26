@@ -16,11 +16,18 @@ class Validation {
         try {
             const singularizedQueryResource = pluralize(this.queryResource, 1);
             const attributesFromClient = req.body[singularizedQueryResource];
+
+            if (!Object.keys(attributesFromClient).length) {
+                return res.status(StatusCodes.BAD_REQUEST).json({ err: ReasonPhrases.BAD_REQUEST, msg: 'no attributes specified' });
+            }
+
             const columns = await DatabaseHelpers.getColumnNamesList(this.queryResource);
+            const attributesValid =
+                req.method === 'POST'
+                    ? Object.keys(attributesFromClient).every((attribute) => columns.includes(attribute))
+                    : Object.keys(attributesFromClient).some((attribute) => columns.includes(attribute));
 
-            const valid = Object.keys(attributesFromClient).every((attribute) => columns.includes(attribute));
-
-            if (!valid) {
+            if (!attributesValid) {
                 return res.status(StatusCodes.BAD_REQUEST).json({ err: ReasonPhrases.BAD_REQUEST, msg: 'invalid attributes' });
             }
 
