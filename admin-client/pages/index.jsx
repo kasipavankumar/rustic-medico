@@ -1,15 +1,20 @@
+import Link from 'next/link';
 // import { API_URL } from '../source/config';
 import Layout from '../source/components/Layout';
 
 function Home() {
     return (
         <Layout>
-            <a href="/login/employee">
-                <h2>Employee Login</h2>
-            </a>
-            <a href="/login/superuser">
-                <h2>Superuser Login</h2>
-            </a>
+            <Link href="/login/employee">
+                <a>
+                    <h2>Employee Login</h2>
+                </a>
+            </Link>
+            <Link href="/login/superuser">
+                <a>
+                    <h2>Superuser Login</h2>
+                </a>
+            </Link>
         </Layout>
     );
 }
