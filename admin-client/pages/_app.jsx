@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import '../public/scss/global.scss';
 
 const MyApp = ({ Component, pageProps }) => {
     return (

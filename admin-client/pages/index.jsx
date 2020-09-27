@@ -1,8 +1,17 @@
 // import { API_URL } from '../source/config';
-import { Heading } from 'evergreen-ui';
+import Layout from '../source/components/Layout';
 
 function Home() {
-    return <Heading size={900}>Hello, world!</Heading>;
+    return (
+        <Layout>
+            <a href="/login/employee">
+                <h2>Employee Login</h2>
+            </a>
+            <a href="/login/superuser">
+                <h2>Superuser Login</h2>
+            </a>
+        </Layout>
+    );
 }
 
 /* export async function getServerSideProps() {
