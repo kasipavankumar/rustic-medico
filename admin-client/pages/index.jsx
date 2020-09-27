@@ -15,6 +15,14 @@ function Home() {
                     <h2>Superuser Login</h2>
                 </a>
             </Link>
+            <Link href="/employees/all">
+                <a>
+                    <h2>All Employees</h2>
+                </a>
+            </Link>
+            <a href="/drugs/all">
+                <h2>All Drugs</h2>
+            </a>
         </Layout>
     );
 }
