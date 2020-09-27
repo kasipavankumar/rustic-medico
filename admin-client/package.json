@@ -17,13 +17,15 @@
     },
     "scripts": {
         "build": "next build",
+        "clean": "rm --recursive --verbose .next",
         "dev": "next dev",
-        "start": "next start",
-        "clean": "rm --recursive --verbose .next"
+        "start": "next start"
     },
     "dependencies": {
+        "evergreen-ui": "^5.1.1",
         "next": "^9.5.3",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "sass": "^1.26.11"
     }
 }

@@ -1,7 +1,8 @@
 // import { API_URL } from '../source/config';
+import { Heading } from 'evergreen-ui';
 
 function Home() {
-    return <h1>Hello, world!</h1>;
+    return <Heading size={900}>Hello, world!</Heading>;
 }
 
 /* export async function getServerSideProps() {
