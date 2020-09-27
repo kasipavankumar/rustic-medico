@@ -1,14 +1,22 @@
-import axios from 'axios';
 import { Table } from 'evergreen-ui';
-import { Layout } from '../../source/components';
-import { API_URL, ADMIN_KEY } from '../../source/config';
+import { Layout, SEO } from '../../source/components';
+import fetchEntities from '../../source/utils/fetchEntities';
 
-const AllEmployees = ({ employees, error }) => {
+const AllEmployees = ({ employees, errors }) => {
+    if (errors) {
+        return (
+            <Layout path="Employees">
+                <h1>Something went wrong!</h1>
+            </Layout>
+        );
+    }
+
     return (
-        <Layout>
-            <h1>All Employees</h1>
+        <Layout path="Employees">
+            <SEO title="Employees" />
+            {/* <h1>👨‍💼 / Employees</h1> */}
             <Table>
-                <Table.Head elevation={1}>
+                <Table.Head>
                     <Table.TextHeaderCell>Name</Table.TextHeaderCell>
                     <Table.TextHeaderCell>Address</Table.TextHeaderCell>
                     <Table.TextHeaderCell>Contact Number</Table.TextHeaderCell>
@@ -32,28 +40,14 @@ const AllEmployees = ({ employees, error }) => {
 };
 
 export async function getServerSideProps() {
-    try {
-        const {
-            data: { employees },
-        } = await axios.get(`${API_URL}/api/admin/employees/get/all`, {
-            headers: {
-                'Admin-Key': ADMIN_KEY,
-            },
-        });
+    const { entityData, hasErrors, errors } = await fetchEntities('employees');
 
-        return {
-            props: {
-                employees,
-            },
-        };
-    } catch (err) {
-        console.error(err);
-        return {
-            props: {
-                error: true,
-            },
-        };
-    }
+    return {
+        props: {
+            employees: entityData,
+            errors: hasErrors ? errors : null,
+        },
+    };
 }
 
 export default AllEmployees;

@@ -1,8 +1,9 @@
-import { Layout, LoginForm } from '../../source/components';
+import { Layout, LoginForm, SEO } from '../../source/components';
 
 const SuperuserLogin = () => {
     return (
         <Layout>
+            <SEO title="Superuser Login" />
             <LoginForm formTitle="Superuser Login" />
         </Layout>
     );

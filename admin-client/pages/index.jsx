@@ -1,10 +1,10 @@
 import Link from 'next/link';
-// import { API_URL } from '../source/config';
-import Layout from '../source/components/Layout';
+import { Layout, SEO } from '../source/components';
 
-function Home() {
+export default function Home() {
     return (
         <Layout>
+            <SEO title="home" />
             <Link href="/login/employee">
                 <a>
                     <h2>Employee Login</h2>
@@ -15,27 +15,21 @@ function Home() {
                     <h2>Superuser Login</h2>
                 </a>
             </Link>
-            <Link href="/employees/all">
+            <Link href="/employees">
                 <a>
-                    <h2>All Employees</h2>
+                    <h2>Employees</h2>
                 </a>
             </Link>
-            <a href="/drugs/all">
-                <h2>All Drugs</h2>
-            </a>
+            <Link href="/drugs">
+                <a>
+                    <h2>Drugs</h2>
+                </a>
+            </Link>
+            <Link href="/customers">
+                <a>
+                    <h2>Customers</h2>
+                </a>
+            </Link>
         </Layout>
     );
 }
-
-/* export async function getServerSideProps() {
-    const res = await fetch(`${API_URL}/api/admin`);
-    const message = await res.json();
-
-    return {
-        props: {
-            message,
-        },
-    };
-} */
-
-export default Home;
