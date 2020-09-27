@@ -2,6 +2,7 @@
 .vscode/*
 
 **/*.env
+**/*.env.local
 
 # Root
 node_modules
