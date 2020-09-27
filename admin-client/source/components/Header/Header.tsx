@@ -20,7 +20,7 @@ export default function Header({ path }) {
             </Pane>
             <SideSheet
                 width={300}
-                position={Position.LEFT}
+                // position='left'
                 isShown={menuOpenSwitch}
                 onCloseComplete={() => toggleMenuOpenSwitch(false)}
                 preventBodyScrolling
