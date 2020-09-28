@@ -44,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Grow ref={ref} {...props} />;
-});
-
 export default function DrugCreationDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -65,7 +61,7 @@ export default function DrugCreationDialog() {
             <Button variant="contained" color="secondary" className={classes.button} onClick={handleClickOpen} startIcon={<AddIcon />} disableElevation>
                 Add Drug
             </Button>
-            <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <Dialog fullScreen open={open} onClose={handleClose}>
                 <Toolbar>
                     <Tooltip title="Cancel drug creation">
                         <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">

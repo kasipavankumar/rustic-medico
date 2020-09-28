@@ -129,7 +129,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            drugs: entityData,
+            drugs: entityData['drugs'],
             errors: null,
         },
     };

@@ -19,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginBottom: theme.spacing(2),
     },
+    errorRoot: {
+        height: '100%',
+        textAlign: 'center',
+    },
+    errorTitle: {
+        fontSize: 26,
+        marginTop: '30vh',
+    },
+    errorSubtitle: {
+        marginTop: 10,
+    },
     noDataRoot: {
         height: '100%',
         display: 'grid',
@@ -40,9 +51,14 @@ export default function Customers({ customers, errors }) {
     if (errors) {
         return (
             <Layout path="Customers">
-                <Typography variant="h1" component="h1">
-                    Something went wrong!
-                </Typography>
+                <div className={classes.errorRoot}>
+                    <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
+                        Something went wrong!
+                        <Typography color="error" className={classes.errorSubtitle} variant="body1">
+                            500
+                        </Typography>
+                    </Typography>
+                </div>
             </Layout>
         );
     }
@@ -104,7 +120,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            customers: entityData,
+            customers: entityData['customers'],
             errors: hasErrors ? errors : null,
         },
     };

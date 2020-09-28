@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { ADMIN_KEY, API_URL } from '../config';
 
-type EntityLike = 'drugs' | 'drug_manufacturers' | 'employees' | 'doctors' | 'customers';
+export type EntityLike = 'drugs' | 'manufacturers' | 'employees' | 'doctors' | 'customers';
 
 interface FetchEntityResult {
     entityData?: any[];
@@ -21,7 +21,7 @@ export default async function fetchEntity(entity: EntityLike): Promise<FetchEnti
         });
 
         return {
-            entityData: response.data[entity],
+            entityData: response.data,
             hasErrors: false,
         };
     } catch (err) {

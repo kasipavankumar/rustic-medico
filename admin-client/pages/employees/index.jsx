@@ -129,7 +129,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            employees: entityData,
+            employees: entityData['employees'],
             errors: hasErrors ? errors : null,
         },
     };

@@ -10,6 +10,10 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import '../public/scss/global.scss';
 
+NProgress.configure({
+    showSpinner: false,
+});
+
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
@@ -17,10 +21,12 @@ Router.events.on('routeChangeError', () => NProgress.done());
 export const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#ed6663',
+            // main: '#ed6663',
+            main: '#ffc93c',
         },
         secondary: {
-            main: '#4e89ae',
+            // main: '#4e89ae',
+            main: '#07689f',
         },
         error: {
             main: red.A400,
