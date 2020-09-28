@@ -1,72 +1,93 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { MenuIcon, Position, SideSheet, Pane, Heading, Icon } from 'evergreen-ui';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
 import styles from './Header.module.scss';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
+
+const options = [
+    {
+        name: 'Superuser Login',
+        link: '/login/superuser',
+    },
+    {
+        name: 'Employee Login',
+        link: '/login/employee',
+    },
+];
+
+const ITEM_HEIGHT = 48;
+
 export default function Header({ path }) {
-    const [menuOpenSwitch, toggleMenuOpenSwitch] = useState<boolean>(false);
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
     const subPath = path ? ` / ${path}` : '';
 
-    return (
-        <nav>
-            <Pane display="flex" alignItems="center" backgroundColor="tint1" marginY={20}>
-                <Icon icon={MenuIcon} onClick={() => toggleMenuOpenSwitch(true)}></Icon>
-                <Heading className={styles.title} size={700} marginX={10}>
-                    <Link href="/">
-                        <a>Rustic Medico</a>
-                    </Link>
-                    {subPath}
-                </Heading>
-            </Pane>
-            <SideSheet
-                width={300}
-                // position='left'
-                isShown={menuOpenSwitch}
-                onCloseComplete={() => toggleMenuOpenSwitch(false)}
-                preventBodyScrolling
-                containerProps={{
-                    display: 'flex',
-                    flex: '1',
-                    flexDirection: 'column',
-                }}
-            >
-                <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
-                    <Pane padding={16}>
-                        <Heading size={600}>Menu</Heading>
-                    </Pane>
-                </Pane>
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-                <Pane zIndex={1} marginBottom={10} flexShrink={0} elevation={0} backgroundColor="white">
-                    <Pane zIndex={1} marginBottom={10} flexShrink={0} elevation={0} backgroundColor="white">
-                        <Pane padding={16}>
-                            🏠{' '}
-                            <Link href="/">
-                                <a>Home</a>
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton> */}
+                    <Typography className={`${classes.title} ${styles.title}`} variant="h6" color="inherit">
+                        <Link href="/">Rustic Medico</Link>
+                        {subPath}
+                    </Typography>
+
+                    <Button color="inherit" onClick={handleClick}>
+                        Login
+                    </Button>
+
+                    <Menu
+                        id="long-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                            style: {
+                                maxHeight: ITEM_HEIGHT * 5.5,
+                                width: '20ch',
+                            },
+                        }}
+                    >
+                        {options.map((option) => (
+                            <Link key={option.name} href={option.link}>
+                                <MenuItem onClick={handleClose}>{option.name}</MenuItem>
                             </Link>
-                        </Pane>
-                    </Pane>
-                    <Pane padding={16}>
-                        💊{' '}
-                        <Link href="/drugs">
-                            <a>Drugs</a>
-                        </Link>
-                    </Pane>
-                    <Pane zIndex={1} marginBottom={10} flexShrink={0} elevation={0} backgroundColor="white">
-                        <Pane padding={16}>
-                            👨‍💼{' '}
-                            <Link href="/employees">
-                                <a>Employees</a>
-                            </Link>
-                        </Pane>
-                    </Pane>
-                    <Pane padding={16}>
-                        🙋‍♂️{' '}
-                        <Link href="/customers">
-                            <a>Customers</a>
-                        </Link>
-                    </Pane>
-                </Pane>
-            </SideSheet>
-        </nav>
+                        ))}
+                    </Menu>
+                </Toolbar>
+            </AppBar>
+        </div>
     );
 }

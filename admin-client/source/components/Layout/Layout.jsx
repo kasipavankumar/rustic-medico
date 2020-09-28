@@ -4,10 +4,8 @@ import styles from './Layout.module.scss';
 const Layout = ({ children, path }) => {
     return (
         <>
-            <div className={styles.container}>
-                <Header path={path} />
-                {children}
-            </div>
+            <Header path={path} />
+            <div className={styles.container}>{children}</div>
         </>
     );
 };

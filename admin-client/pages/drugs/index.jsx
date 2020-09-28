@@ -1,13 +1,37 @@
+import React from 'react';
 import Link from 'next/link';
-import { AddIcon, Button, Table, Pane } from 'evergreen-ui';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import { Layout, SEO } from '../../source/components';
 import fetchEntities from '../../source/utils/fetchEntities';
 
+const useStyles = makeStyles((theme) => ({
+    table: {
+        minWidth: 650,
+    },
+    button: {
+        marginBottom: theme.spacing(2),
+    },
+}));
+
 const AllDrugs = ({ drugs, errors }) => {
+    const classes = useStyles();
+
     if (errors) {
         return (
             <Layout>
-                <h1>Something went wrong!</h1>
+                <Typography variant="h2" component="h2">
+                    Something went wrong!
+                </Typography>
             </Layout>
         );
     }
@@ -15,34 +39,39 @@ const AllDrugs = ({ drugs, errors }) => {
     return (
         <Layout path="Drugs">
             <SEO title="Drugs" />
-            <Pane display="flex" alignItems="center">
-                {/* <h1>💊 / Drugs</h1> */}
-                <Link href="/drug/add" key="add-new-drug">
-                    <Button appearance="primary" intent="success" marginX={0} marginBottom={20} iconBefore={AddIcon}>
-                        Add Drug
-                    </Button>
-                </Link>
-            </Pane>
-            <Table>
-                <Table.Head>
-                    <Table.TextHeaderCell>Name</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Price</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Expiry Date</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Manufacturer</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Supplier</Table.TextHeaderCell>
-                </Table.Head>
-                <Table.Body height={'auto'}>
-                    {drugs.map((drug) => (
-                        <Table.Row id={drug.id} key={drug.id} isSelectable>
-                            <Table.TextCell>{drug.name}</Table.TextCell>
-                            <Table.TextCell>{`₹ ${drug.price}`}</Table.TextCell>
-                            <Table.TextCell>{new Date(drug.expiry_date).toDateString()}</Table.TextCell>
-                            <Table.TextCell>{drug.manufacturer_name}</Table.TextCell>
-                            <Table.TextCell>{drug.supplier_name}</Table.TextCell>
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-            </Table>
+
+            <Link href="/drug/add">
+                <Button variant="contained" color="secondary" className={classes.button} startIcon={<AddIcon />}>
+                    Add Drug
+                </Button>
+            </Link>
+
+            <TableContainer component={Paper}>
+                <Table stickyHeader className={classes.table} aria-label="Drugs data table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Price</TableCell>
+                            <TableCell>Expiry Date</TableCell>
+                            <TableCell>Manufacturer</TableCell>
+                            <TableCell>Supplier</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {drugs.map((drug) => (
+                            <TableRow id={drug.id} key={drug.id}>
+                                <TableCell component="th" scope="row">
+                                    {drug.name}
+                                </TableCell>
+                                <TableCell>{`₹ ${drug.price}`}</TableCell>
+                                <TableCell>{new Date(drug.expiry_date).toDateString()}</TableCell>
+                                <TableCell>{drug.manufacturer_name}</TableCell>
+                                <TableCell>{drug.supplier_name}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Layout>
     );
 };
