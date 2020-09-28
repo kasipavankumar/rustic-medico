@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { Layout, SEO } from '../../source/components';
+import { DrugsCreationDialog } from '../../source/components/EntityCreationDialogs';
 import fetchEntities from '../../source/utils/fetchEntities';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,11 +41,13 @@ const AllDrugs = ({ drugs, errors }) => {
         <Layout path="Drugs">
             <SEO title="Drugs" />
 
-            <Link href="/drug/add">
+            {/* <Link href="/drug/add">
                 <Button variant="contained" color="secondary" className={classes.button} startIcon={<AddIcon />}>
                     Add Drug
                 </Button>
-            </Link>
+            </Link> */}
+
+            <DrugsCreationDialog />
 
             <TableContainer component={Paper}>
                 <Table stickyHeader className={classes.table} aria-label="Drugs data table">

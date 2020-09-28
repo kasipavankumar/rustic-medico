@@ -9,11 +9,10 @@ import '../public/scss/global.scss';
 export const theme = createMuiTheme({
     palette: {
         primary: {
-            // main: '#556cd6',
-            main: '#ff9a76',
+            main: '#ed6663',
         },
         secondary: {
-            main: '#19857b',
+            main: '#4e89ae',
         },
         error: {
             main: red.A400,

@@ -53,7 +53,7 @@ export default function Header({ path }) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" elevation={0}>
                 <Toolbar>
                     {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
