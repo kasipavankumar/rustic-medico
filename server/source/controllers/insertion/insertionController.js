@@ -20,8 +20,6 @@ class InsertionController {
             const queryResourceDetail = req.body[singularQuerySourceName];
             const { statement, params } = await this.helper.buildInsertQuery(queryResourceDetail);
 
-            console.log(statement, params);
-
             const result = await pool.query(statement, params);
 
             if (result.rowCount !== 1) {
