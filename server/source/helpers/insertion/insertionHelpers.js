@@ -35,12 +35,16 @@ class InsertionHelpers {
     };
 
     buildInsertQuery = async (objectWithDetails) => {
-        const attributes = await this.getAttributes();
+        const sortedAttributes = Object.keys(objectWithDetails).sort((a, b) => a.localeCompare(b));
         const paramPlaceholders = this.buildParamPlaceholders(objectWithDetails);
-        const params = this.buildParams(objectWithDetails);
+        const params = [...sortedAttributes.map((a) => objectWithDetails[a])];
+        const attributes = Object.keys(objectWithDetails)
+            .sort((a, b) => a.localeCompare(b))
+            .map((a) => a)
+            .join(', ');
 
         return {
-            statement: `insert into ${this.queryResource} ${attributes} values (${paramPlaceholders});`,
+            statement: `insert into ${this.queryResource} (${attributes}) values (${paramPlaceholders});`,
             params,
         };
     };
