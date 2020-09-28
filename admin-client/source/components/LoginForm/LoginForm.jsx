@@ -40,7 +40,7 @@ const LoginForm = ({ formTitle }) => {
                         {formTitle}
                     </Typography>
                     <div className={classes.formBody}>
-                        <TextField className={classes.textField} fullWidth type="text" label="Username" variant="standard" />
+                        <TextField autoFocus className={classes.textField} fullWidth type="text" label="Username" variant="standard" />
                         <TextField className={classes.textField} fullWidth type="password" label="Password" variant="standard" />
                     </div>
                     <Button variant="outlined" color="primary">

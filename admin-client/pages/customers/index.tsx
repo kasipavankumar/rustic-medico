@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,9 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import { Layout, SEO } from '../../source/components';
+import { CustomersCreationDialog } from '../../source/components/EntityCreationDialogs';
 import { fetchEntities } from '../../source/utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +20,14 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     noDataRoot: {
-        height: 'calc(-7.1em + 100vh)',
+        height: '100%',
         display: 'grid',
         placeItems: 'center',
         textAlign: 'center',
     },
     noDataTitle: {
         fontSize: 26,
+        marginTop: '25vh',
     },
     noDataSubtitle: {
         marginTop: 10,
@@ -51,6 +50,7 @@ export default function Customers({ customers, errors }) {
     if (!customers.length) {
         return (
             <Layout path="Customers">
+                <CustomersCreationDialog />
                 <div className={classes.noDataRoot}>
                     <Typography className={classes.noDataTitle} variant="h4" component="h4">
                         No customers yet! <br />
@@ -67,11 +67,7 @@ export default function Customers({ customers, errors }) {
         <Layout path="Customers">
             <SEO title="Customers" />
 
-            <Link href="/drug/add">
-                <Button variant="contained" color="secondary" className={classes.button} startIcon={<AddIcon />}>
-                    Add Customer
-                </Button>
-            </Link>
+            <CustomersCreationDialog />
 
             <TableContainer component={Paper}>
                 <Table stickyHeader className={classes.table} aria-label="Drugs data table">

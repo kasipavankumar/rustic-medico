@@ -48,7 +48,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Grow ref={ref} {...props} />;
 });
 
-export default function DrugCreationDialog() {
+export default function CustomerCreationDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -63,18 +63,18 @@ export default function DrugCreationDialog() {
     return (
         <div>
             <Button variant="contained" color="secondary" className={classes.button} onClick={handleClickOpen} startIcon={<AddIcon />} disableElevation>
-                Add Drug
+                Add Customer
             </Button>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                 <Toolbar>
-                    <Tooltip title="Cancel drug creation">
+                    <Tooltip title="Cancel customer creation">
                         <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
                     </Tooltip>
 
-                    <TextField autoFocus className={classes.nameInputField} type="text" placeholder="Drug name" />
-                    <Tooltip title="Proceed with drug creation">
+                    <TextField autoFocus className={classes.nameInputField} type="text" placeholder="Customer name" />
+                    <Tooltip title="Proceed with customer creation">
                         <Button className={classes.submitBtn} variant="contained" color="primary" onClick={handleClose} disableElevation>
                             Submit
                         </Button>
@@ -83,35 +83,34 @@ export default function DrugCreationDialog() {
 
                 <List>
                     <ListItem>
-                        <TextField fullWidth type="number" label="Drug Price" inputMode="numeric" InputProps={{ inputProps: { min: 1 } }} />
+                        <TextField fullWidth type="text" label="Address" inputMode="text" />
                     </ListItem>
                     <div className={classes.spacer}></div>
                     <ListItem>
-                        <TextField fullWidth type="date" placeholder="Expiry Date" />
+                        <TextField fullWidth type="number" placeholder="Contact Number" />
                     </ListItem>
                     <div className={classes.spacer}></div>
                     <ListItem>
                         <FormControl fullWidth>
-                            <InputLabel>Manufacturer</InputLabel>
-                            <Select placeholder="Manufacturers" labelId="demo-simple-select-helper-label">
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                            <InputLabel>Doctor</InputLabel>
+                            <Select placeholder="Doctor">
+                                <MenuItem value={'Morning'}>Morning</MenuItem>
+                                <MenuItem value={'Afternoon'}>Afternoon</MenuItem>
+                                <MenuItem value={'Night'}>Night</MenuItem>
                             </Select>
                         </FormControl>
                     </ListItem>
                     <div className={classes.spacer}></div>
                     <ListItem>
                         <FormControl fullWidth>
-                            <InputLabel>Supplier</InputLabel>
-                            <Select fullWidth placeholder="Suppliers" labelId="demo-simple-select-helper-label">
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                            <InputLabel>Employee</InputLabel>
+                            <Select placeholder="Employee">
+                                <MenuItem value={'Morning'}>Morning</MenuItem>
+                                <MenuItem value={'Afternoon'}>Afternoon</MenuItem>
+                                <MenuItem value={'Night'}>Night</MenuItem>
                             </Select>
                         </FormControl>
                     </ListItem>
-                    <div className={classes.spacer}></div>
                 </List>
             </Dialog>
         </div>

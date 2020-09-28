@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,9 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import { Layout, SEO } from '../../source/components';
+import { EmployeeCreationDialog } from '../../source/components/EntityCreationDialogs';
 import fetchEntities from '../../source/utils/fetchEntities';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +19,30 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginBottom: theme.spacing(2),
     },
+    errorRoot: {
+        height: '100%',
+        textAlign: 'center',
+    },
+    errorTitle: {
+        fontSize: 26,
+        marginTop: '30vh',
+    },
+    errorSubtitle: {
+        marginTop: 10,
+    },
+    noDataRoot: {
+        height: '100%',
+        display: 'grid',
+        placeItems: 'center',
+        textAlign: 'center',
+    },
+    noDataTitle: {
+        fontSize: 26,
+        marginTop: '25vh',
+    },
+    noDataSubtitle: {
+        marginTop: 10,
+    },
 }));
 
 const AllEmployees = ({ employees, errors }) => {
@@ -29,7 +51,30 @@ const AllEmployees = ({ employees, errors }) => {
     if (errors) {
         return (
             <Layout path="Employees">
-                <h1>Something went wrong!</h1>
+                <div className={classes.errorRoot}>
+                    <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
+                        Something went wrong!
+                        <Typography color="error" className={classes.errorSubtitle} variant="body1">
+                            500
+                        </Typography>
+                    </Typography>
+                </div>
+            </Layout>
+        );
+    }
+
+    if (!employees.length) {
+        return (
+            <Layout path="Employees">
+                <EmployeeCreationDialog />
+                <div className={classes.noDataRoot}>
+                    <Typography className={classes.noDataTitle} variant="h4" component="h4">
+                        No employees yet! <br />
+                        <Typography className={classes.noDataSubtitle} variant="body1">
+                            Be kind, hire few employees and come back.
+                        </Typography>
+                    </Typography>
+                </div>
             </Layout>
         );
     }
@@ -38,11 +83,7 @@ const AllEmployees = ({ employees, errors }) => {
         <Layout path="Employees">
             <SEO title="Employees" />
 
-            <Link href="/drug/add">
-                <Button variant="contained" color="secondary" className={classes.button} startIcon={<AddIcon />}>
-                    Add Employee
-                </Button>
-            </Link>
+            <EmployeeCreationDialog />
 
             <TableContainer component={Paper}>
                 <Table stickyHeader className={classes.table} aria-label="Drugs data table">
@@ -76,6 +117,15 @@ const AllEmployees = ({ employees, errors }) => {
 
 export async function getServerSideProps() {
     const { entityData, hasErrors, errors } = await fetchEntities('employees');
+
+    if (hasErrors) {
+        return {
+            props: {
+                drugs: null,
+                errors,
+            },
+        };
+    }
 
     return {
         props: {

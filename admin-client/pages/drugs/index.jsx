@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,8 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import { Layout, SEO } from '../../source/components';
 import { DrugsCreationDialog } from '../../source/components/EntityCreationDialogs';
 import fetchEntities from '../../source/utils/fetchEntities';
@@ -22,6 +19,30 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginBottom: theme.spacing(2),
     },
+    errorRoot: {
+        height: '100%',
+        textAlign: 'center',
+    },
+    errorTitle: {
+        fontSize: 26,
+        marginTop: '30vh',
+    },
+    errorSubtitle: {
+        marginTop: 10,
+    },
+    noDataRoot: {
+        height: '100%',
+        display: 'grid',
+        placeItems: 'center',
+        textAlign: 'center',
+    },
+    noDataTitle: {
+        fontSize: 26,
+        marginTop: '25vh',
+    },
+    noDataSubtitle: {
+        marginTop: 10,
+    },
 }));
 
 const AllDrugs = ({ drugs, errors }) => {
@@ -29,10 +50,31 @@ const AllDrugs = ({ drugs, errors }) => {
 
     if (errors) {
         return (
-            <Layout>
-                <Typography variant="h2" component="h2">
-                    Something went wrong!
-                </Typography>
+            <Layout path="Drugs">
+                <div className={classes.errorRoot}>
+                    <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
+                        Something went wrong!
+                        <Typography color="error" className={classes.errorSubtitle} variant="body1">
+                            500
+                        </Typography>
+                    </Typography>
+                </div>
+            </Layout>
+        );
+    }
+
+    if (!drugs.length) {
+        return (
+            <Layout path="Customers">
+                <DrugsCreationDialog />
+                <div className={classes.noDataRoot}>
+                    <Typography className={classes.noDataTitle} variant="h4" component="h4">
+                        No drugs yet! <br />
+                        <Typography className={classes.noDataSubtitle} variant="body1">
+                            Go ahead and add as many drugs as you want.
+                        </Typography>
+                    </Typography>
+                </div>
             </Layout>
         );
     }
@@ -40,12 +82,6 @@ const AllDrugs = ({ drugs, errors }) => {
     return (
         <Layout path="Drugs">
             <SEO title="Drugs" />
-
-            {/* <Link href="/drug/add">
-                <Button variant="contained" color="secondary" className={classes.button} startIcon={<AddIcon />}>
-                    Add Drug
-                </Button>
-            </Link> */}
 
             <DrugsCreationDialog />
 
@@ -82,10 +118,19 @@ const AllDrugs = ({ drugs, errors }) => {
 export async function getServerSideProps() {
     const { entityData, hasErrors, errors } = await fetchEntities('drugs');
 
+    if (hasErrors) {
+        return {
+            props: {
+                drugs: null,
+                errors,
+            },
+        };
+    }
+
     return {
         props: {
             drugs: entityData,
-            errors: hasErrors ? errors : null,
+            errors: null,
         },
     };
 }
