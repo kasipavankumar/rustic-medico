@@ -51,6 +51,7 @@ const AllEmployees = ({ employees, errors }) => {
     if (errors) {
         return (
             <Layout path="Employees">
+                <SEO title="Employees" faviconEmoji="👨‍💼" />
                 <div className={classes.errorRoot}>
                     <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
                         Something went wrong!
@@ -66,6 +67,7 @@ const AllEmployees = ({ employees, errors }) => {
     if (!employees.length) {
         return (
             <Layout path="Employees">
+                <SEO title="Employees" faviconEmoji="👨‍💼" />
                 <EmployeeCreationDialog />
                 <div className={classes.noDataRoot}>
                     <Typography className={classes.noDataTitle} variant="h4" component="h4">
@@ -81,7 +83,7 @@ const AllEmployees = ({ employees, errors }) => {
 
     return (
         <Layout path="Employees">
-            <SEO title="Employees" />
+            <SEO title="Employees" faviconEmoji="👨‍💼" />
 
             <EmployeeCreationDialog />
 

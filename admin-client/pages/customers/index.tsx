@@ -51,6 +51,7 @@ export default function Customers({ customers, errors }) {
     if (errors) {
         return (
             <Layout path="Customers">
+                <SEO title="Customers" faviconEmoji="🙋‍♂️" />
                 <div className={classes.errorRoot}>
                     <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
                         Something went wrong!
@@ -66,6 +67,7 @@ export default function Customers({ customers, errors }) {
     if (!customers.length) {
         return (
             <Layout path="Customers">
+                <SEO title="Customers" faviconEmoji="🙋‍♂️" />
                 <CustomersCreationDialog />
                 <div className={classes.noDataRoot}>
                     <Typography className={classes.noDataTitle} variant="h4" component="h4">
@@ -81,7 +83,7 @@ export default function Customers({ customers, errors }) {
 
     return (
         <Layout path="Customers">
-            <SEO title="Customers" />
+            <SEO title="Customers" faviconEmoji="🙋‍♂️" />
 
             <CustomersCreationDialog />
 

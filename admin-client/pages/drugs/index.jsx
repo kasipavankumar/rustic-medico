@@ -51,6 +51,7 @@ const AllDrugs = ({ drugs, errors }) => {
     if (errors) {
         return (
             <Layout path="Drugs">
+                <SEO title="Drugs" faviconEmoji="💊" />
                 <div className={classes.errorRoot}>
                     <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
                         Something went wrong!
@@ -66,6 +67,7 @@ const AllDrugs = ({ drugs, errors }) => {
     if (!drugs.length) {
         return (
             <Layout path="Customers">
+                <SEO title="Drugs" faviconEmoji="💊" />
                 <DrugsCreationDialog />
                 <div className={classes.noDataRoot}>
                     <Typography className={classes.noDataTitle} variant="h4" component="h4">
@@ -81,7 +83,7 @@ const AllDrugs = ({ drugs, errors }) => {
 
     return (
         <Layout path="Drugs">
-            <SEO title="Drugs" />
+            <SEO title="Drugs" faviconEmoji="💊" />
 
             <DrugsCreationDialog />
 
