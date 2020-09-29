@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { MenuOpen } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import styles from './Header.module.scss';
 
@@ -22,16 +23,20 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
 }));
 
 const options = [
     {
-        name: 'Superuser Login',
+        name: 'Login',
         link: '/login/superuser',
     },
     {
-        name: 'Employee Login',
-        link: '/login/employee',
+        name: 'Disclaimer',
+        link: '/disclaimer',
     },
 ];
 
@@ -55,17 +60,14 @@ export default function Header({ path }) {
         <div className={classes.root}>
             <AppBar position="static" elevation={0}>
                 <Toolbar>
-                    {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton> */}
                     <Typography className={`${classes.title} ${styles.title}`} variant="h6" color="inherit">
                         <Link href="/">Rustic Medico</Link>
                         {subPath}
                     </Typography>
 
-                    <Button color="inherit" onClick={handleClick}>
-                        Login
-                    </Button>
+                    <IconButton edge="start" className={classes.menuButton} onClick={handleClick} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
 
                     <Menu
                         id="long-menu"
