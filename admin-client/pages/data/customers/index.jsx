@@ -5,9 +5,8 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../../source/components';
 import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import { CustomersUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
+import { CustomersDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import { fetchEntities } from '../../../source/utils';
-import { useEffect } from 'react';
-import { Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -41,14 +40,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
   dataGridRoot: {
-    height: '565px',
+    height: '615px',
     width: '100%',
   },
   optionsRoot: {
     display: 'flex',
     alignItems: 'center',
-    '& button': {
-      marginLeft: 10,
+    '& div:first-child': {
+      marginBottom: '16px',
+    },
+    '& div:not(:first-child)': {
+      marginLeft: 15,
       marginBottom: '16px',
     },
   },
@@ -128,7 +130,12 @@ export default function Customers({ customers, errors }) {
 
       <div className={classes.optionsRoot}>
         <CustomersCreationDialog />
-        {showOptions && <CustomersUpdationDialog data={editData} />}
+        {showOptions && (
+          <>
+            <CustomersUpdationDialog data={editData} />
+            <CustomersDeletionDialog data={editData} />
+          </>
+        )}
       </div>
 
       <div className={classes.dataGridRoot}>
@@ -136,7 +143,7 @@ export default function Customers({ customers, errors }) {
           loading={!rows.length}
           rows={rows}
           columns={columns}
-          pageSize={8}
+          pageSize={10}
           onCellClick={(e) => {
             setEditData(e.data);
             if (editData.name === e.data.name) {
