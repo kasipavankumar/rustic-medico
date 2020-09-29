@@ -70,19 +70,22 @@ export default function CustomerCreationDialog() {
     };
 
     useEffect(() => {
-        // TODO: Use Promise.all();
-        fetchEntities('doctors')
-            .then((res) => setDoctors(res.entityData['doctors']))
-            .catch((err) => new Error(err));
+        try {
+            Promise.all([fetchEntities('doctors'), fetchEntities('employees')])
+                .then((data) => {
+                    const [doctors, employees] = data;
 
-        fetchEntities('employees')
-            .then((res) => setEmployees(res.entityData['employees']))
-            .catch((err) => new Error(err));
+                    setDoctors(doctors.entityData['doctors']);
+                    setEmployees(employees.entityData['employees']);
+                })
+                .catch(console.error);
+        } catch (err) {
+            console.error(err);
+        }
     }, []);
 
     const handleDataSubmission = () => {
         toggleIsLoading(true);
-        // validateData();
 
         if (!customerName.length || !contactNumber.length || !employeeName.length || !doctorName.length || !address.length) {
             toggleIsLoading(false);
