@@ -47,7 +47,7 @@ export default function Disclaimer() {
                         .
                     </Typography>
                     <Typography variant="subtitle1">
-                        If you have any issues / queries regarding any entity of this website,{' '}
+                        If you have issues or queries regarding any entity of this website,{' '}
                         <Tooltip title="The repository will go live in few days.">
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/kasipavankumar/rustic-medico/issues">
                                 please file an issue over here

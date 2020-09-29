@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
-import { Layout, SEO } from '../../source/components';
-import { DrugsCreationDialog } from '../../source/components/EntityCreationDialogs';
-import fetchEntities from '../../source/utils/fetchEntities';
+import { Layout, SEO } from '../../../source/components';
+import { EmployeeCreationDialog } from '../../../source/components/EntityCreationDialogs';
+import fetchEntities from '../../../source/utils/fetchEntities';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -46,33 +46,29 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'price', headerName: 'Price (INR)', width: 150 },
-    { field: 'medical_description', headerName: 'Medical Description', width: 350 },
-    { field: 'manufacturing_date', headerName: 'Manufacturing Date', width: 200 },
-    { field: 'expiry_date', headerName: 'Expiry Date', width: 200 },
-    { field: 'manufacturer_name', headerName: 'Manufacturer', width: 300 },
-    { field: 'supplier_name', headerName: 'Supplier', width: 250 },
+    { field: 'contact_number', headerName: 'Contact Number', width: 150 },
+    { field: 'address', headerName: 'Address', width: 300 },
+    { field: 'date_of_joining', headerName: 'Date of Joining', width: 150 },
+    { field: 'shift', headerName: 'Shift', width: 200 },
     { field: 'created_at', headerName: 'Created At', width: 150 },
     { field: 'updated_at', headerName: 'Updated At', width: 150 },
 ];
 
-export default function Drugs({ drugs, errors }) {
+const AllEmployees = ({ employees, errors }) => {
     const classes = useStyles();
 
     const parseDate = (date) => new Date(date).toDateString();
 
-    const rows = drugs.map((drug, i) => {
-        const { name, price, medical_description, manufacturing_date, expiry_date, manufacturer_name, supplier_name, created_at, updated_at } = drug;
+    const rows = employees.map((employee, i) => {
+        const { name, contact_number, address, date_of_joining, shift, created_at, updated_at } = employee;
 
         return {
             id: i + 1,
             name,
-            price,
-            medical_description,
-            manufacturing_date: parseDate(manufacturing_date),
-            expiry_date: parseDate(expiry_date),
-            manufacturer_name,
-            supplier_name,
+            contact_number,
+            address,
+            date_of_joining: parseDate(date_of_joining),
+            shift,
             created_at: parseDate(created_at),
             updated_at: parseDate(updated_at),
         };
@@ -80,27 +76,30 @@ export default function Drugs({ drugs, errors }) {
 
     if (errors) {
         return (
-            <Layout path="Drugs">
-                <SEO title="Drugs" faviconEmoji="💊" />
+            <Layout path="Employees">
+                <SEO title="Employees" faviconEmoji="👨‍💼" />
                 <div className={classes.errorRoot}>
                     <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
                         Something went wrong!
+                        <Typography color="error" className={classes.errorSubtitle} variant="body1">
+                            500
+                        </Typography>
                     </Typography>
                 </div>
             </Layout>
         );
     }
 
-    if (!drugs.length) {
+    if (!employees.length) {
         return (
-            <Layout path="Customers">
-                <SEO title="Drugs" faviconEmoji="💊" />
-                <DrugsCreationDialog />
+            <Layout path="Employees">
+                <SEO title="Employees" faviconEmoji="👨‍💼" />
+                <EmployeeCreationDialog />
                 <div className={classes.noDataRoot}>
                     <Typography className={classes.noDataTitle} variant="h4" component="h4">
-                        No drugs yet! <br />
+                        No employees yet! <br />
                         <Typography className={classes.noDataSubtitle} variant="body1">
-                            Go ahead and add as many drugs as you want.
+                            Be kind, hire few employees and come back.
                         </Typography>
                     </Typography>
                 </div>
@@ -109,20 +108,20 @@ export default function Drugs({ drugs, errors }) {
     }
 
     return (
-        <Layout path="Drugs">
-            <SEO title="Drugs" faviconEmoji="💊" />
+        <Layout path="Employees">
+            <SEO title="Employees" faviconEmoji="👨‍💼" />
 
-            <DrugsCreationDialog />
+            <EmployeeCreationDialog />
 
             <div className={classes.dataGridRoot}>
-                <DataGrid rows={rows} columns={columns} pageSize={8} />
+                <DataGrid loading={!Boolean(rows.length)} rows={rows} columns={columns} pageSize={8} />
             </div>
         </Layout>
     );
-}
+};
 
 export async function getServerSideProps() {
-    const { entityData, hasErrors, errors } = await fetchEntities('drugs');
+    const { entityData, hasErrors, errors } = await fetchEntities('employees');
 
     if (hasErrors) {
         return {
@@ -135,8 +134,10 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            drugs: entityData['drugs'],
-            errors: null,
+            employees: entityData['employees'],
+            errors: hasErrors ? errors : null,
         },
     };
 }
+
+export default AllEmployees;
