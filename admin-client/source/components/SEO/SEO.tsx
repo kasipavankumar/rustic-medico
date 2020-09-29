@@ -5,17 +5,19 @@ interface ISEOProps {
     title: string;
     description?: string;
     image?: string;
+    faviconEmoji?: string;
 }
 
 type LinkProps = JSX.IntrinsicElements['link'];
 
 const SEO: React.FC<ISEOProps> = (props) => {
     const [currentLocation, setCurrentLocation] = useState<string>('');
-    const { title, description, image } = props;
+    const { title, description, image, faviconEmoji } = props;
     const seo = {
         title: title.toLowerCase() === `home` ? `Rustic Medico` : `${title} · Rustic Medico`,
         image: !image ? `https://og-image.now.sh/${encodeURI(`Rustic Medico`)}.png` : image,
         description: !description ? 'Rustic Medico - a project demonstrating DBMS operations.' : description,
+        faviconEmoji: !faviconEmoji ? '🧪' : faviconEmoji,
     };
     const links: LinkProps[] = [
         { rel: `icon`, href: `/favicon.ico` },
@@ -31,13 +33,17 @@ const SEO: React.FC<ISEOProps> = (props) => {
 
     return (
         <Helmet title={seo.title} htmlAttributes={{ lang: `en`, dir: `ltr` }}>
-            <html key="base-html-tag" lang="en" dir="ltr" data-app-name="Rustic Medico" />
+            <html key="base-html-tag" lang="en" dir="ltr" app-name="Rustic Medico" />
 
             {links.map((link, index) => (
                 <link key={`${link.href}-${index}`} rel={link.rel} href={link.href} />
             ))}
 
             <link rel="canonical" href={currentLocation} />
+            <link
+                rel="icon"
+                href={`data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>${seo.faviconEmoji}</text></svg>`}
+            ></link>
 
             <meta name="theme-color" content="#fff" />
             <meta key="meta-description" name="description" content={seo.description} />
