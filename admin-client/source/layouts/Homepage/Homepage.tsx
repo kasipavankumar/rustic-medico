@@ -13,13 +13,13 @@ export default function Homepage() {
         <>
             <Grid container spacing={1}>
                 <Grid item xs>
-                    <MaterialCard title="👨‍💼 Employees" description="View and Manage all Employees" link="/employees" />
+                    <MaterialCard title="👨‍💼 Employees" description="View and Manage all Employees" link="/data/employees" />
                 </Grid>
                 <Grid item xs>
-                    <MaterialCard title="🙋‍♂️ Customers" description="View and Manage all Customers" link="/customers" />
+                    <MaterialCard title="🙋‍♂️ Customers" description="View and Manage all Customers" link="/data/customers" />
                 </Grid>
                 <Grid item xs>
-                    <MaterialCard title="💊 Drugs" description="View and Manage all Drugs" link="/drugs" />
+                    <MaterialCard title="💊 Drugs" description="View and Manage all Drugs" link="/data/drugs" />
                 </Grid>
             </Grid>
         </>
@@ -59,12 +59,11 @@ function MaterialCard({ description, title, link }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                {/* <Link href={link}>
-                    <Button size="small">Manage 🔧</Button>
-                </Link> */}
-                <a href={link} className={classes.link}>
-                    <Button size="small">Manage 🔧</Button>
-                </a>
+                <Link href={link}>
+                    <a className={classes.link}>
+                        <Button size="small">Manage 🔧</Button>
+                    </a>
+                </Link>
             </CardActions>
         </Card>
     );
