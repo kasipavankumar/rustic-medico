@@ -180,7 +180,7 @@ export default function CustomerCreationDialog() {
                             <InputLabel>Employee</InputLabel>
                             <Select placeholder="Employee" value={employeeName} onChange={(e) => setEmployeeName(e.target.value)}>
                                 {employees &&
-                                    employees.map((employee, i) => (
+                                    employees.map((employee) => (
                                         <MenuItem key={employee.id} value={employee.name}>
                                             {employee.name}
                                         </MenuItem>
