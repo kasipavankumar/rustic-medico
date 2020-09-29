@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, createContext } from 'react';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -21,11 +21,9 @@ Router.events.on('routeChangeError', () => NProgress.done());
 export const theme = createMuiTheme({
     palette: {
         primary: {
-            // main: '#ed6663',
             main: '#ffc93c',
         },
         secondary: {
-            // main: '#4e89ae',
             main: '#07689f',
         },
         error: {
@@ -37,8 +35,10 @@ export const theme = createMuiTheme({
     },
 });
 
+export const UserContext = createContext({ isLoggedIn: false });
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
-    React.useEffect(() => {
+    useEffect(() => {
         const jssStyles = document.querySelector('#jss-server-side');
 
         if (jssStyles) {
@@ -49,8 +49,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Component {...pageProps} />
+                <UserContext.Provider value={{ isLoggedIn: true }}>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </UserContext.Provider>
             </ThemeProvider>
         </>
     );
