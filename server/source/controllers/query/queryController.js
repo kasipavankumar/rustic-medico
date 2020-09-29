@@ -24,7 +24,7 @@ class QueryController {
      */
     getAll = async (req, res) => {
         try {
-            const dbQuery = `select * from ${this.queryResource};`;
+            const dbQuery = `select * from ${this.queryResource} order by updated_at desc;`;
 
             const { rows } = await pool.query(dbQuery);
 
