@@ -1,19 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../source/components';
 import { DrugsCreationDialog } from '../../source/components/EntityCreationDialogs';
 import fetchEntities from '../../source/utils/fetchEntities';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -65,8 +56,10 @@ const columns = [
     { field: 'updated_at', headerName: 'Updated At', width: 150 },
 ];
 
-const AllDrugs = ({ drugs, errors }) => {
+export default function Drugs({ drugs, errors }) {
     const classes = useStyles();
+
+    const parseDate = (date) => new Date(date).toDateString();
 
     const rows = drugs.map((drug, i) => {
         const { name, price, medical_description, manufacturing_date, expiry_date, manufacturer_name, supplier_name, created_at, updated_at } = drug;
@@ -76,12 +69,12 @@ const AllDrugs = ({ drugs, errors }) => {
             name,
             price,
             medical_description,
-            manufacturing_date: new Date(manufacturing_date).toDateString(),
-            expiry_date: new Date(expiry_date).toDateString(),
+            manufacturing_date: parseDate(manufacturing_date),
+            expiry_date: parseDate(expiry_date),
             manufacturer_name,
             supplier_name,
-            created_at: new Date(created_at).toDateString(),
-            updated_at: new Date(updated_at).toDateString(),
+            created_at: parseDate(created_at),
+            updated_at: parseDate(updated_at),
         };
     });
 
@@ -92,9 +85,6 @@ const AllDrugs = ({ drugs, errors }) => {
                 <div className={classes.errorRoot}>
                     <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
                         Something went wrong!
-                        <Typography color="error" className={classes.errorSubtitle} variant="body1">
-                            500
-                        </Typography>
                     </Typography>
                 </div>
             </Layout>
@@ -124,47 +114,12 @@ const AllDrugs = ({ drugs, errors }) => {
 
             <DrugsCreationDialog />
 
-            {/* <TableContainer component={Paper}>
-                <Table stickyHeader className={classes.table} aria-label="Drugs data table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell>Medical Description</TableCell>
-                            <TableCell>Manufacturing Date</TableCell>
-                            <TableCell>Expiry Date</TableCell>
-                            <TableCell>Manufacturer</TableCell>
-                            <TableCell>Supplier</TableCell>
-                            <TableCell>Created At</TableCell>
-                            <TableCell>Updated At</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {drugs.map((drug) => (
-                            <TableRow id={drug.id} key={drug.id}>
-                                <TableCell component="th" scope="row">
-                                    {drug.name}
-                                </TableCell>
-                                <TableCell>{`₹ ${drug.price}`}</TableCell>
-                                <TableCell>{drug.medical_description}</TableCell>
-                                <TableCell>{new Date(drug.manufacturing_date).toDateString()}</TableCell>
-                                <TableCell>{new Date(drug.expiry_date).toDateString()}</TableCell>
-                                <TableCell>{drug.manufacturer_name}</TableCell>
-                                <TableCell>{drug.supplier_name}</TableCell>
-                                <TableCell>{new Date(drug.created_at).toDateString()}</TableCell>
-                                <TableCell>{new Date(drug.updated_at).toDateString()}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer> */}
-
             <div className={classes.dataGridRoot}>
                 <DataGrid rows={rows} columns={columns} pageSize={8} />
             </div>
         </Layout>
     );
-};
+}
 
 export async function getServerSideProps() {
     const { entityData, hasErrors, errors } = await fetchEntities('drugs');
@@ -185,5 +140,3 @@ export async function getServerSideProps() {
         },
     };
 }
-
-export default AllDrugs;
