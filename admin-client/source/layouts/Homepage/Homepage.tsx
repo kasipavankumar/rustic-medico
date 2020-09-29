@@ -39,6 +39,10 @@ const useStyles = makeStyles({
         marginTop: 15,
         marginBottom: 10,
     },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
 });
 
 function MaterialCard({ description, title, link }) {
@@ -55,9 +59,12 @@ function MaterialCard({ description, title, link }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Link href={link}>
+                {/* <Link href={link}>
                     <Button size="small">Manage 🔧</Button>
-                </Link>
+                </Link> */}
+                <a href={link} className={classes.link}>
+                    <Button size="small">Manage 🔧</Button>
+                </a>
             </CardActions>
         </Card>
     );
