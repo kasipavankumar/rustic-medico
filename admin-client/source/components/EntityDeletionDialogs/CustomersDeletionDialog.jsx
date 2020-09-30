@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,20 +8,20 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { Edit } from '@material-ui/icons';
+import Delete from '@material-ui/icons/Delete';
 import { useRouter } from 'next/router';
 import Axios from 'axios';
 import { ADMIN_KEY, API_URL } from '../../config';
-import { Fab, Tooltip, Zoom } from '@material-ui/core';
+import { Fab, Tooltip } from '@material-ui/core';
 
-export default function CustomerUpdationDialog({ data }) {
+export default function CustomerDeletionDialog({ data }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [dataToUpdate, setDataToUpdate] = useState({});
+  const [dataToDelete, setDataToDelete] = useState({});
   const [snackbar, setSnackbar] = useState({ show: false, message: '' });
 
   useEffect(() => {
-    setDataToUpdate(data);
+    setDataToDelete(data);
   }, [data]);
 
   const handleSnackbarClose = () => {
@@ -32,26 +31,23 @@ export default function CustomerUpdationDialog({ data }) {
     });
   };
 
-  const handleRecordUpdation = useCallback(() => {
+  const handleRecordDeletion = useCallback(() => {
     Axios({
-      method: 'PUT',
-      url: `${API_URL}/api/admin/customers/update/one`,
+      method: 'DELETE',
+      url: `${API_URL}/api/admin/customers/delete/one?id=${dataToDelete.id}`,
       headers: {
         'Content-Type': 'application/json',
         'Admin-Key': ADMIN_KEY,
       },
-      data: {
-        customer: dataToUpdate,
-      },
     })
       .then((res) => {
         if (res.status === 200) {
-          console.log('Updated!');
           setSnackbar({
             show: true,
-            message: `Updated ${dataToUpdate.name}.`,
+            message: `Deleted ${dataToDelete.name}.`,
           });
-          router.replace('/data/customers');
+          setDataToDelete({});
+          router.reload();
           handleClose();
           return;
         }
@@ -59,10 +55,10 @@ export default function CustomerUpdationDialog({ data }) {
       .catch((err) => {
         setSnackbar({
           show: true,
-          message: `Could not update ${dataToUpdate.name}.`,
+          message: `Could not delete ${dataToDelete.name}.`,
         });
       });
-  }, [dataToUpdate]);
+  }, [dataToDelete]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,69 +66,31 @@ export default function CustomerUpdationDialog({ data }) {
 
   const handleClose = () => {
     setOpen(false);
-    setDataToUpdate(data);
+    setDataToDelete(data);
   };
 
   return (
     <div>
-      {/* <Button startIcon={<Edit />} variant="contained" color="primary" disableElevation onClick={handleClickOpen}>
-        Edit Record
-      </Button> */}
-      <Tooltip title={`Edit ${dataToUpdate.name}'s record`}>
+      <Tooltip title={`Delete ${dataToDelete.name}'s record`}>
+        {/* TODO: Add error color to this FAB */}
         <Fab size="medium" color="secondary" onClick={handleClickOpen}>
-          <Edit />
+          <Delete />
         </Fab>
       </Tooltip>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Edit Record</DialogTitle>
+        <DialogTitle id="form-dialog-title">Delete Record</DialogTitle>
         <DialogContent>
-          <DialogContentText>Edit the details you want to update.</DialogContentText>
-          <TextField
-            fullWidth
-            margin="dense"
-            id="name"
-            label="Name"
-            type="text"
-            value={dataToUpdate.name}
-            onChange={(e) => {
-              setDataToUpdate({
-                ...dataToUpdate,
-                name: e.target.value,
-              });
-            }}
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            id="address"
-            label="Address"
-            type="text"
-            value={dataToUpdate.address}
-            onChange={(e) => {
-              setDataToUpdate({
-                ...dataToUpdate,
-                address: e.target.value,
-              });
-            }}
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            id="contact_number"
-            label="Contact Number"
-            type="number"
-            value={dataToUpdate.contact_number}
-            onChange={(e) => {
-              setDataToUpdate({ ...dataToUpdate, contact_number: e.target.value });
-            }}
-          />
+          <DialogContentText>
+            Are you sure you want to delete {dataToDelete.name}'s record? <br />
+            This action cannot be undone.
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleRecordUpdation} color="primary">
-            Update
+          <Button onClick={handleRecordDeletion} color="primary">
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

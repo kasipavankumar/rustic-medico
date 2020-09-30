@@ -9,13 +9,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { Fab, Tooltip } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import Axios from 'axios';
 import { ADMIN_KEY, API_URL } from '../../config';
-import { Fab, Tooltip, Zoom } from '@material-ui/core';
 
-export default function CustomerUpdationDialog({ data }) {
+export default function DrugsUpdationDialog({ data }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [dataToUpdate, setDataToUpdate] = useState({});
@@ -35,13 +35,13 @@ export default function CustomerUpdationDialog({ data }) {
   const handleRecordUpdation = useCallback(() => {
     Axios({
       method: 'PUT',
-      url: `${API_URL}/api/admin/customers/update/one`,
+      url: `${API_URL}/api/admin/drugs/update/one`,
       headers: {
         'Content-Type': 'application/json',
         'Admin-Key': ADMIN_KEY,
       },
       data: {
-        customer: dataToUpdate,
+        drug: dataToUpdate,
       },
     })
       .then((res) => {
@@ -51,7 +51,7 @@ export default function CustomerUpdationDialog({ data }) {
             show: true,
             message: `Updated ${dataToUpdate.name}.`,
           });
-          router.replace('/data/customers');
+          router.replace('/data/drugs');
           handleClose();
           return;
         }
@@ -75,9 +75,6 @@ export default function CustomerUpdationDialog({ data }) {
 
   return (
     <div>
-      {/* <Button startIcon={<Edit />} variant="contained" color="primary" disableElevation onClick={handleClickOpen}>
-        Edit Record
-      </Button> */}
       <Tooltip title={`Edit ${dataToUpdate.name}'s record`}>
         <Fab size="medium" color="secondary" onClick={handleClickOpen}>
           <Edit />
@@ -104,26 +101,61 @@ export default function CustomerUpdationDialog({ data }) {
           <TextField
             fullWidth
             margin="dense"
-            id="address"
-            label="Address"
-            type="text"
-            value={dataToUpdate.address}
+            id="price"
+            label="Price"
+            type="number"
+            value={dataToUpdate.price}
             onChange={(e) => {
               setDataToUpdate({
                 ...dataToUpdate,
-                address: e.target.value,
+                price: e.target.value,
               });
             }}
           />
           <TextField
             fullWidth
+            multiline
             margin="dense"
-            id="contact_number"
-            label="Contact Number"
-            type="number"
-            value={dataToUpdate.contact_number}
+            id="medical_description"
+            label="Medical Description"
+            type="text"
+            value={dataToUpdate.medical_description}
             onChange={(e) => {
-              setDataToUpdate({ ...dataToUpdate, contact_number: e.target.value });
+              setDataToUpdate({ ...dataToUpdate, medical_description: e.target.value });
+            }}
+          />
+          <TextField
+            fullWidth
+            multiline
+            margin="dense"
+            id="image_link"
+            label="Image Link"
+            type="text"
+            value={dataToUpdate.image_link}
+            onChange={(e) => {
+              setDataToUpdate({ ...dataToUpdate, image_link: e.target.value });
+            }}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            id="manufacturing_date"
+            label="Manufacturing Date"
+            type="date"
+            value={dataToUpdate.manufacturing_date}
+            onChange={(e) => {
+              setDataToUpdate({ ...dataToUpdate, manufacturing_date: e.target.value });
+            }}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            id="expiry_date"
+            label="Expiry Date"
+            type="date"
+            value={dataToUpdate.expiry_date}
+            onChange={(e) => {
+              setDataToUpdate({ ...dataToUpdate, expiry_date: e.target.value });
             }}
           />
         </DialogContent>
