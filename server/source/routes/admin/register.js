@@ -1,0 +1,56 @@
+/**
+ * server/source/routes/admin/register.js
+ *
+ * Handles admin registration process.
+ */
+
+const { Router } = require('express');
+const bcrypt = require('bcrypt');
+const { StatusCodes, ReasonPhrases } = require('http-status-codes');
+
+const pool = require('../../database');
+
+const RegistrationRouter = Router();
+
+RegistrationRouter.post('/', async (req, res) => {
+  try {
+    /**
+     * Get admin details from the request's body.
+     */
+    const {
+      admin: { username, password },
+    } = req.body;
+    /**
+     * In case there is no username or password.
+     */
+    if (!username || !password) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'invalid credentials' });
+    }
+    /**
+     * Hash (salt) the password before saving.
+     */
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = 'insert into superuser_login (username, password) values ($1, $2);';
+    /**
+     * Run query on database to insert new admin.
+     */
+    await pool.query(query, [username, hashedPassword]);
+    /**
+     * Admin has been registered successfully.
+     */
+    return res.status(StatusCodes.OK).json({ message: 'admin registered' });
+  } catch (err) {
+    /**
+     * Admin already registered.
+     */
+    if (err.code === '23505') {
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'admin already registered' });
+    }
+    /**
+     * Something went wrong with server.
+     */
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  }
+});
+
+module.exports = RegistrationRouter;

@@ -5,13 +5,18 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const ADMIN_KEY = fromEnv('ADMIN_KEY');
 const DATABASE_URL = isProduction ? fromEnv('DATABASE_URL') : fromEnv('DATABASE_URL_DEV');
+const JWT_SECRET = fromEnv('JWT_SECRET');
 
 if (!ADMIN_KEY) {
-    throw new Error('no ADMIN_KEY found in .env');
+  throw new Error('ADMIN_KEY not found in .env');
 }
 
 if (!DATABASE_URL) {
-    throw new Error('no DATABASE_URL found in .env');
+  throw new Error('DATABASE_URL not found in .env');
 }
 
-module.exports = { DATABASE_URL, ADMIN_KEY };
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET not found in .env');
+}
+
+module.exports = { DATABASE_URL, ADMIN_KEY, JWT_SECRET };
