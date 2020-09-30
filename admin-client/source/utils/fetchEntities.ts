@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { ADMIN_KEY, API_URL } from '../config';
 
-export type EntityLike = 'drugs' | 'manufacturers' | 'employees' | 'doctors' | 'customers';
+export type EntityLike = 'drugs' | 'manufacturers' | 'employees' | 'doctors' | 'customers' | 'suppliers';
 
 interface FetchEntityResult {
     entityData?: any[];
