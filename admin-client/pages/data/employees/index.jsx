@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
 import { useRouter } from 'next/router';
-import cookie from 'js-cookie';
 
 import { Layout, SEO } from '../../../source/components';
 import { EmployeeCreationDialog } from '../../../source/components/EntityCreationDialogs';
@@ -60,14 +59,6 @@ const columns = [
 const AllEmployees = ({ employees, errors }) => {
   const classes = useStyles();
   const router = useRouter();
-
-  useEffect(() => {
-    const token = cookie.get('_SID_');
-
-    if (!token) {
-      router.replace('/login');
-    }
-  }, []);
 
   const parseDate = (date) => new Date(date).toDateString();
 
@@ -132,7 +123,14 @@ const AllEmployees = ({ employees, errors }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
+  // Redirect to login if not authenticated.
+  if (!req?.headers?.cookie) {
+    res.writeHead(307, { Location: '/login' });
+    res.end();
+    return { props: {} };
+  }
+
   const { entityData, hasErrors, errors } = await fetchEntities('employees');
 
   if (hasErrors) {

@@ -7,6 +7,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import NProgress from 'nprogress';
 
+import { AuthProvider } from '../source/providers/Auth';
+
 import 'nprogress/nprogress.css';
 
 NProgress.configure({
@@ -45,10 +47,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </AuthProvider>
     </>
   );
 };

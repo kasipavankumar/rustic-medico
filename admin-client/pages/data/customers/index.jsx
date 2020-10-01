@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
 import { useRouter } from 'next/router';
-import cookie from 'js-cookie';
 
 import { Layout, SEO } from '../../../source/components';
 import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
@@ -78,13 +77,13 @@ const Customers = ({ customers, errors }) => {
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
 
-  useEffect(() => {
-    const token = cookie.get('_SID_');
+  // useEffect(() => {
+  //   const token = cookie.get('_SID_');
 
-    if (!token) {
-      router.replace('/login');
-    }
-  }, []);
+  //   if (!token) {
+  //     router.replace('/login');
+  //   }
+  // }, []);
 
   if (errors) {
     return (
@@ -170,7 +169,14 @@ const Customers = ({ customers, errors }) => {
   );
 };
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps({ req, res }) {
+  // Redirect to login if not authenticated.
+  if (!req?.headers?.cookie) {
+    res.writeHead(307, { Location: '/login' });
+    res.end();
+    return { props: {} };
+  }
+
   const { hasErrors, entityData } = await fetchEntities('customers');
 
   if (hasErrors) {
