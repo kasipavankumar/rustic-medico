@@ -24,7 +24,7 @@ RegistrationRouter.post('/', async (req, res) => {
      * In case there is no username or password.
      */
     if (!username || !password) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'invalid credentials' });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'registration failed' });
     }
     /**
      * Hash (salt) the password before saving.
@@ -38,13 +38,13 @@ RegistrationRouter.post('/', async (req, res) => {
     /**
      * Admin has been registered successfully.
      */
-    return res.status(StatusCodes.OK).json({ message: 'admin registered' });
+    return res.status(StatusCodes.OK).json({ message: 'registration successful' });
   } catch (err) {
     /**
      * Admin already registered.
      */
     if (err.code === '23505') {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'admin already registered' });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: ReasonPhrases.BAD_REQUEST, message: 'registration failed' });
     }
     /**
      * Something went wrong with server.
