@@ -1,10 +1,13 @@
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { useRouter } from 'next/router';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { LoginService } from '../../services';
 
@@ -36,6 +39,7 @@ const LoginForm = ({ formTitle }) => {
   const classes = useStyles();
   const router = useRouter();
   const [adminDetails, setAdminDetails] = useState({ username: '', password: '' });
+  const [snackbar, setSnackbar] = useState({ show: false, message: '' });
 
   const handleLoginProcess = useCallback(() => {
     const data = {
@@ -47,14 +51,25 @@ const LoginForm = ({ formTitle }) => {
     loginService
       .login()
       .then((response) => {
-        if (response) {
-          router.push('/');
+        if (!response) {
+          setSnackbar({ show: true, message: 'Invalid credentials.' });
+          return;
         }
+
+        router.push('/');
       })
       .catch((err) => {
         console.log(err);
       });
   }, [adminDetails]);
+
+  const handleSnackbarClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbar({ show: false, message: '' });
+  };
 
   const handleInputs = (e) => {
     e.persist();
@@ -81,6 +96,24 @@ const LoginForm = ({ formTitle }) => {
           </Button>
         </form>
       </Paper>
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbar.message}
+        action={
+          <React.Fragment>
+            <IconButton size="medium" aria-label="close" color="inherit" onClick={handleSnackbarClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
     </div>
   );
 };
