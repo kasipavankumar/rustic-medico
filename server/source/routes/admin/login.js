@@ -54,9 +54,7 @@ LoginRouter.post('/', async (req, res) => {
     /**
      * Create a encoded token using jsonwebtokens.
      */
-    const token = jwt.sign({ adminID: rows[0].id, username: rows[0].username }, JWT_SECRET, {
-      expiresIn: '10s',
-    });
+    const token = jwt.sign({ adminID: rows[0].id, username: rows[0].username }, JWT_SECRET);
     /**
      * Credentials are valid, token is generated, proceed to login the admin.
      */
