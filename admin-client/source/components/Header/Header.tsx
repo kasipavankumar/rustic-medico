@@ -83,6 +83,7 @@ export default function Header({ path }) {
           </IconButton>
 
           <Menu
+            keepMounted
             id="long-menu"
             anchorEl={anchorEl}
             open={open}
