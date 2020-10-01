@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/admin/register', require('./routes/admin/register'));
 app.use('/api/admin/login', require('./routes/admin/login'));
+
 app.use('/api/admin/drugs', ensureAdminAuthentication, require('./routes/drugs'));
 app.use('/api/admin/employees', ensureAdminAuthentication, require('./routes/employees'));
 app.use('/api/admin/manufacturers', ensureAdminAuthentication, require('./routes/manufacturers'));
