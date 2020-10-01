@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
+import { useRouter } from 'next/router';
+import cookie from 'js-cookie';
+
 import { Layout, SEO } from '../../../source/components';
 import { DrugsCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import { DrugsUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
@@ -72,8 +75,18 @@ const columns = [
 
 export default function Drugs({ drugs, errors }) {
   const classes = useStyles();
+  const router = useRouter();
+
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
+
+  useEffect(() => {
+    const token = cookie.get('_SID_');
+
+    if (!token) {
+      router.replace('/login');
+    }
+  }, []);
 
   const parseDate = (date) => new Date(date).toDateString();
 

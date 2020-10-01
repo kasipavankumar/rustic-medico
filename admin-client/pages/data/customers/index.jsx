@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
+import { useRouter } from 'next/router';
+import cookie from 'js-cookie';
+
 import { Layout, SEO } from '../../../source/components';
 import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import { CustomersUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   errorTitle: {
-    fontSize: 26,
+    fontSize: 28,
     marginTop: '30vh',
   },
   errorSubtitle: {
@@ -68,28 +71,20 @@ const columns = [
   { field: 'updated_at', headerName: 'Updated At', width: 150 },
 ];
 
-export default function Customers({ customers, errors }) {
+const Customers = ({ customers, errors }) => {
   const classes = useStyles();
+  const router = useRouter();
+
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
 
-  const parseDate = (date) => new Date(date).toDateString();
+  useEffect(() => {
+    const token = cookie.get('_SID_');
 
-  const rows = customers.map((customer) => {
-    const { id, name, address, last_purchased_on, contact_number, employee_name, doctor_name, created_at, updated_at } = customer;
-
-    return {
-      id,
-      name,
-      address,
-      last_purchased_on: parseDate(last_purchased_on),
-      contact_number,
-      employee_name,
-      doctor_name,
-      created_at: parseDate(created_at),
-      updated_at: parseDate(updated_at),
-    };
-  });
+    if (!token) {
+      router.replace('/login');
+    }
+  }, []);
 
   if (errors) {
     return (
@@ -98,14 +93,31 @@ export default function Customers({ customers, errors }) {
         <div className={classes.errorRoot}>
           <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
             Something went wrong!
-            <Typography color="error" className={classes.errorSubtitle} variant="body1">
-              500
-            </Typography>
           </Typography>
         </div>
       </Layout>
     );
   }
+
+  const parseDate = (date) => new Date(date).toDateString();
+
+  const rows =
+    customers &&
+    customers.map((customer) => {
+      const { id, name, address, last_purchased_on, contact_number, employee_name, doctor_name, created_at, updated_at } = customer;
+
+      return {
+        id,
+        name,
+        address,
+        last_purchased_on: parseDate(last_purchased_on),
+        contact_number,
+        employee_name,
+        doctor_name,
+        created_at: parseDate(created_at),
+        updated_at: parseDate(updated_at),
+      };
+    });
 
   if (!customers.length) {
     return (
@@ -156,15 +168,24 @@ export default function Customers({ customers, errors }) {
       </div>
     </Layout>
   );
-}
+};
 
-export async function getServerSideProps() {
-  const { entityData, hasErrors, errors } = await fetchEntities('customers');
+export async function getServerSideProps(ctx) {
+  const { hasErrors, entityData } = await fetchEntities('customers');
+
+  if (hasErrors) {
+    return {
+      props: {
+        errors: true,
+      },
+    };
+  }
 
   return {
     props: {
       customers: entityData['customers'],
-      errors: hasErrors ? errors : null,
     },
   };
 }
+
+export default Customers;
