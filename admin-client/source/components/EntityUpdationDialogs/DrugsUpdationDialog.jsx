@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import Axios from 'axios';
 import { ADMIN_KEY, API_URL } from '../../config';
 
-export default function DrugsUpdationDialog({ data }) {
+const DrugsUpdationDialog = ({ data }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [dataToUpdate, setDataToUpdate] = useState({});
@@ -37,6 +37,7 @@ export default function DrugsUpdationDialog({ data }) {
       method: 'PUT',
       url: `${API_URL}/api/admin/drugs/update/one`,
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
         'Admin-Key': ADMIN_KEY,
       },
@@ -46,7 +47,6 @@ export default function DrugsUpdationDialog({ data }) {
     })
       .then((res) => {
         if (res.status === 200) {
-          console.log('Updated!');
           setSnackbar({
             show: true,
             message: `Updated ${dataToUpdate.name}.`,
@@ -186,4 +186,6 @@ export default function DrugsUpdationDialog({ data }) {
       />
     </div>
   );
-}
+};
+
+export default DrugsUpdationDialog;

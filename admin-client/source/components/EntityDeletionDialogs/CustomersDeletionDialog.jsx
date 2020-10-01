@@ -47,7 +47,7 @@ export default function CustomerDeletionDialog({ data }) {
             message: `Deleted ${dataToDelete.name}.`,
           });
           setDataToDelete({});
-          router.reload();
+          router.replace('/data/customers');
           handleClose();
           return;
         }
