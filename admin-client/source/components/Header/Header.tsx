@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import cookie from 'js-cookie';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,8 +39,25 @@ const ITEM_HEIGHT = 48;
 export default function Header({ path }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOptions, setMenuOptions] = useState([]);
+
   const open = Boolean(anchorEl);
   const subPath = path ? ` / ${path}` : '';
+
+  useEffect(() => {
+    const token = cookie.get('_SID_');
+
+    setMenuOptions([
+      {
+        name: 'Disclaimer',
+        link: '/disclaimer',
+      },
+      {
+        name: token ? 'Logout' : 'Login',
+        link: token ? '/logout' : '/login',
+      },
+    ]);
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,7 +85,6 @@ export default function Header({ path }) {
           <Menu
             id="long-menu"
             anchorEl={anchorEl}
-            keepMounted
             open={open}
             onClose={handleClose}
             PaperProps={{
@@ -77,10 +94,12 @@ export default function Header({ path }) {
               },
             }}
           >
-            {options.map((option) => (
-              <Link key={option.name} href={option.link}>
-                <MenuItem onClick={handleClose}>{option.name}</MenuItem>
-              </Link>
+            {menuOptions.map((option) => (
+              <MenuItem key={option.name} onClick={handleClose}>
+                <Link href={option.link}>
+                  <a className={classes.link}>{option.name}</a>
+                </Link>
+              </MenuItem>
             ))}
           </Menu>
         </Toolbar>
