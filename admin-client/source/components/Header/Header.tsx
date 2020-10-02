@@ -23,18 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = [
-  {
-    name: 'Login',
-    link: '/login/superuser',
-  },
-  {
-    name: 'Disclaimer',
-    link: '/disclaimer',
-  },
-];
-
 const ITEM_HEIGHT = 48;
+
+function MenuLink({ link, text }) {
+  return <Link href={link}>{text}</Link>;
+}
 
 export default function Header({ path }) {
   const classes = useStyles();
@@ -96,8 +89,8 @@ export default function Header({ path }) {
             }}
           >
             {menuOptions.map((option) => (
-              <MenuItem component="a" href={option.link} key={option.name} onClose={handleClose}>
-                {option.name}
+              <MenuItem key={option.name}>
+                <MenuLink link={option.link} text={option.name} />
               </MenuItem>
             ))}
           </Menu>
