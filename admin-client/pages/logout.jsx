@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { TokenService } from '../source/services';
 
@@ -14,6 +15,7 @@ const useStyles = makeStyles({
   title: {
     fontSize: '24px',
     marginTop: '50vh',
+    marginBottom: '15px',
   },
 });
 
@@ -31,6 +33,7 @@ export default function Logout() {
       <Typography variant="h3" className={styles.title}>
         Logging out...
       </Typography>
+      <CircularProgress />
     </div>
   );
 }
