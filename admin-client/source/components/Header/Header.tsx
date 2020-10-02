@@ -96,10 +96,8 @@ export default function Header({ path }) {
             }}
           >
             {menuOptions.map((option) => (
-              <MenuItem key={option.name} onClick={handleClose}>
-                <Link href={option.link}>
-                  <a className={classes.link}>{option.name}</a>
-                </Link>
+              <MenuItem component="a" href={option.link} key={option.name} onClose={handleClose}>
+                {option.name}
               </MenuItem>
             ))}
           </Menu>
