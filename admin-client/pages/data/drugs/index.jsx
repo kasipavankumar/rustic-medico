@@ -5,10 +5,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
-import { DrugsCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import { DrugsUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
 import { DrugsDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import fetchEntities from '../../../source/utils/fetchEntities';
+import DrugsCreationDialog from '../../../source/components/EntityCreationDialogs/Drugs';
+
 
 const useStyles = makeStyles((theme) => ({
   table: {

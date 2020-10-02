@@ -8,6 +8,7 @@ import { Layout, SEO } from '../../../source/components';
 import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import { CustomersUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
 import { CustomersDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
+import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
 import { fetchEntities } from '../../../source/utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,19 +43,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
   dataGridRoot: {
-    height: '615px',
+    // height: '550px',
+    height: '70vh',
+    maxHeight: '70vh',
     width: '100%',
   },
   optionsRoot: {
     display: 'flex',
     alignItems: 'center',
-    '& div:first-child': {
-      marginBottom: '16px',
-    },
-    '& div:not(:first-child)': {
-      marginLeft: 15,
-      marginBottom: '16px',
-    },
   },
 }));
 
@@ -76,14 +72,6 @@ const Customers = ({ customers, errors }) => {
 
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
-
-  // useEffect(() => {
-  //   const token = cookie.get('_SID_');
-
-  //   if (!token) {
-  //     router.replace('/login');
-  //   }
-  // }, []);
 
   if (errors) {
     return (
@@ -140,7 +128,8 @@ const Customers = ({ customers, errors }) => {
       <SEO title="Customers" faviconEmoji="🙋‍♂️" />
 
       <div className={classes.optionsRoot}>
-        <CustomersCreationDialog />
+        {/* <CustomersCreationDialog /> */}
+        <EntityCreationDialog entity="customer" />
         {showOptions && (
           <>
             <CustomersUpdationDialog data={editData} />

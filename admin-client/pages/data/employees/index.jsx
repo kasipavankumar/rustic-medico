@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
 import { EmployeeCreationDialog } from '../../../source/components/EntityCreationDialogs';
+import EmployeeCreationForm from '../../../source/components/EntityCreationDialogs/Employees';
 import fetchEntities from '../../../source/utils/fetchEntities';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
   dataGridRoot: {
-    height: '565px',
+    // height: '550px',
+    height: '70vh',
     width: '100%',
   },
 }));
@@ -114,7 +116,8 @@ const AllEmployees = ({ employees, errors }) => {
     <Layout path="Employees">
       <SEO title="Employees" faviconEmoji="👨‍💼" />
 
-      <EmployeeCreationDialog />
+      {/* <EmployeeCreationDialog /> */}
+      <EmployeeCreationForm />
 
       <div className={classes.dataGridRoot}>
         <DataGrid loading={!Boolean(rows.length)} rows={rows} columns={columns} pageSize={8} />
