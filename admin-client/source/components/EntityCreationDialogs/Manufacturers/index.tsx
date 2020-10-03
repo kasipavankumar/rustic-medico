@@ -6,19 +6,16 @@ import TextField from '@material-ui/core/TextField';
 import { useRouter } from 'next/router';
 
 import NetworkService from '../../../services/networkService';
-import EntityDependencySelect from '../core/EntityDependencySelect';
 import { Transition, DialogTitle, DialogActions, DialogContent, FormControl } from '../core/DialogBase';
 import RusticMedicoSnackbar from '../core/Snackbar';
 import CreationFab from '../core/CreationFab';
 
-const CustomerCreationForm: FC = () => {
+const ManufacturerCreationForm: FC = () => {
   const textFieldVariant = 'filled';
   const initialFormValues = {
     name: '',
     address: '',
     contact_number: '',
-    doctor_name: '',
-    employee_name: '',
   };
   const initialSnackbarState = {
     show: false,
@@ -30,7 +27,7 @@ const CustomerCreationForm: FC = () => {
   const [inputs, setInputs] = useState(initialFormValues);
   const [snackbar, setSnackbar] = useState(initialSnackbarState);
 
-  const networkService = new NetworkService('customers');
+  const networkService = new NetworkService('manufacturers');
 
   const handleCustomerCreation = useCallback(() => {
     const postData = async () => {
@@ -40,7 +37,7 @@ const CustomerCreationForm: FC = () => {
         if (!postDataSuccess) {
           setSnackbar({
             show: true,
-            message: 'Could not post data',
+            message: 'Could not post data.',
           });
 
           return;
@@ -49,13 +46,13 @@ const CustomerCreationForm: FC = () => {
         handleClose();
         setSnackbar({
           show: true,
-          message: `Added ${inputs.name}`,
+          message: `Added ${inputs.name}.`,
         });
-        router.replace('/data/customers');
+        router.replace('/data/manufacturers');
       } catch (err) {
         setSnackbar({
           show: true,
-          message: 'Could not post data',
+          message: 'Could not post data.',
         });
         console.log(err);
       }
@@ -88,26 +85,24 @@ const CustomerCreationForm: FC = () => {
 
   return (
     <>
-      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new customer" />
+      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new manufacturer" />
 
       <Dialog keepMounted TransitionComponent={Transition} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle title="customer" id="customized-dialog-title" onClose={handleClose}>
-          Create new customer
+        <DialogTitle title="manufacturer" id="manufacturer-creation-dialog" onClose={handleClose}>
+          Create new manufacturer
         </DialogTitle>
 
         <DialogContent dividers>
-          {/* Customer's full name */}
           <FormControl fullWidth>
-            <TextField type="text" name="name" label="Full name" placeholder="John Doe" variant={textFieldVariant} value={inputs.name} onChange={handleInputs} />
+            <TextField type="text" name="name" label="Name" placeholder="Apex Laboratories LTD" variant={textFieldVariant} value={inputs.name} onChange={handleInputs} />
           </FormControl>
 
-          {/* Customer's address */}
           <FormControl fullWidth>
             <TextField
               type="text"
               name="address"
               label="Address"
-              placeholder="Street 5, Hyderabad, TS"
+              placeholder="TSIDC, Outer Hyderabad, TS"
               rowsMax={4}
               value={inputs.address}
               variant={textFieldVariant}
@@ -116,14 +111,9 @@ const CustomerCreationForm: FC = () => {
             />
           </FormControl>
 
-          {/* Customer's contact number */}
           <FormControl fullWidth>
             <TextField type="tel" name="contact_number" label="Contact Number" placeholder="7772226669" variant={textFieldVariant} value={inputs.contact_number} onChange={handleInputs} />
           </FormControl>
-
-          {/* Dependents Selects */}
-          <EntityDependencySelect entityName="doctors" name="doctor_name" value={inputs.doctor_name} label="Doctor name" variant={textFieldVariant} onChange={handleInputs} />
-          <EntityDependencySelect entityName="employees" name="employee_name" value={inputs.employee_name} label="Employee name" variant={textFieldVariant} onChange={handleInputs} />
         </DialogContent>
 
         <DialogActions>
@@ -138,4 +128,4 @@ const CustomerCreationForm: FC = () => {
   );
 };
 
-export default CustomerCreationForm;
+export default ManufacturerCreationForm;

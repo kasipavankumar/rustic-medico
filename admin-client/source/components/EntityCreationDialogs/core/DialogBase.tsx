@@ -34,7 +34,7 @@ export const Transition = React.forwardRef(function Transition(props: Transition
 
 export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { title, children, classes, onClose, ...other } = props;
-  const tooltipMessage = `Cancel ${title ? title : 'creation'} process`;
+  const tooltipMessage = `Cancel ${title ? title : ' '} creation process`;
 
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>

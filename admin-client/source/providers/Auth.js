@@ -1,4 +1,5 @@
 import React, { useEffect, useState, createContext, useContext } from 'react';
+// import { API_URL } from '../config';
 
 const AuthContext = createContext({
   isAuthenticated: false,
@@ -11,9 +12,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      // const response = await fetch('/api/check-auth');
-      setAuthenticated(true);
-      setLoading(false);
+      try {
+        // await fetch(`${API_URL}/api/verify-token`, { method: 'GET', credentials: 'include' });
+        setAuthenticated(true);
+        setLoading(false);
+      } catch (error) {
+        setAuthenticated(false);
+        setLoading(false);
+      }
     };
 
     initializeAuth();

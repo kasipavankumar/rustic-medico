@@ -21,12 +21,14 @@ class NetworkService {
 
   postData = async (data: {}): Promise<boolean> => {
     try {
+      const localEntityName = this.entityName === 'manufacturers' ? 'drug_manufacturer' : singularize(this.entityName);
+
       await axios({
         method: 'POST',
         url: buildPostEndpoint(this.entityName),
         headers: buildHeaders(),
         data: {
-          [singularize(this.entityName)]: data,
+          [localEntityName]: data,
         },
       });
 

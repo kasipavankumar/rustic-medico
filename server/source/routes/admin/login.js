@@ -68,7 +68,7 @@ LoginRouter.post('/', async (req, res) => {
     //   secure: process.env.NODE_ENV === 'production',
     // });
 
-    return res.status(StatusCodes.OK).json({ message: 'logged in' });
+    return res.status(StatusCodes.OK).json({ message: 'logged in', token });
   } catch (err) {
     /**
      * Something went wrong with server.

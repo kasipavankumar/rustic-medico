@@ -29,7 +29,7 @@ function MenuLink({ link, text }) {
   return <Link href={link}>{text}</Link>;
 }
 
-export default function Header({ path }) {
+const Header = ({ path }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOptions, setMenuOptions] = useState([]);
@@ -52,7 +52,7 @@ export default function Header({ path }) {
     ]);
   }, []);
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.ChangeEvent<any>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -98,4 +98,6 @@ export default function Header({ path }) {
       </AppBar>
     </div>
   );
-}
+};
+
+export default Header;
