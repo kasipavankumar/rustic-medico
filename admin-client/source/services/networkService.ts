@@ -6,6 +6,7 @@ import { API_URL, ADMIN_KEY } from '../config';
 const singularize = (word: string) => pluralize(word, 1);
 const buildGetEnpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/get/all`;
 const buildPostEndpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/add/one`;
+const buildUpdateEndpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/update/one`;
 const buildHeaders = () => ({
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -18,6 +19,27 @@ class NetworkService {
   constructor(entityName: string) {
     this.entityName = entityName;
   }
+
+  updateData = async (data: {}): Promise<boolean> => {
+    try {
+      const localEntityName = this.entityName === 'manufacturers' ? 'drug_manufacturer' : singularize(this.entityName);
+
+      console.log(data);
+
+      await axios({
+        method: 'PUT',
+        url: buildUpdateEndpoint(this.entityName),
+        headers: buildHeaders(),
+        data: {
+          [localEntityName]: data,
+        },
+      });
+
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 
   postData = async (data: {}): Promise<boolean> => {
     try {
