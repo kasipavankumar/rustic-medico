@@ -56,9 +56,19 @@ LoginRouter.post('/', async (req, res) => {
      */
     const token = jwt.sign({ adminID: rows[0].id, username: rows[0].username }, JWT_SECRET);
     /**
-     * Credentials are valid, token is generated, proceed to login the admin.
+     * Credentials are valid, token is generated, set the cookie and proceed to login the admin.
      */
-    return res.status(StatusCodes.OK).json({ message: 'logged in', token });
+
+    // TODO: This part is responsible for sending cookies.
+    // To be used from API v2.
+    // res.cookie('_SID_', token, {
+    //   path: '/',
+    //   httpOnly: true,
+    //   sameSite: 'lax',
+    //   secure: process.env.NODE_ENV === 'production',
+    // });
+
+    return res.status(StatusCodes.OK).json({ message: 'logged in' });
   } catch (err) {
     /**
      * Something went wrong with server.
