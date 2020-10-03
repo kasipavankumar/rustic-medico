@@ -11,7 +11,6 @@ function Home() {
 }
 
 export async function getServerSideProps({ req, res }) {
-  // Redirect to login if not authenticated.
   if (!req?.headers?.cookie) {
     res.writeHead(307, { Location: '/login?redirect=home' });
     res.end();

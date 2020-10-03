@@ -18,6 +18,7 @@ class LoginService {
           'Content-Type': 'application/json',
         },
         data: this.credentials,
+        // withCredentials: true,
       });
 
       const tokenService = new TokenService('_SID_', response.data.token);

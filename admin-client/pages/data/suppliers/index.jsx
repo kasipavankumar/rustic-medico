@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
-import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
-import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
-import { CustomersUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
-import { CustomersDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
-import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
 import { fetchEntities } from '../../../source/utils';
+import SuppliersCreationDialog from '../../../source/components/EntityCreationDialogs/Suppliers';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -43,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
   dataGridRoot: {
-    // height: '550px',
     height: '70vh',
     maxHeight: '70vh',
     width: '100%',
@@ -57,26 +52,22 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
   { field: 'id', headerName: 'ID', hide: true },
   { field: 'name', headerName: 'Name', width: 200 },
-  { field: 'address', headerName: 'Address', type: 'text', width: 300 },
-  { field: 'last_purchased_on', headerName: 'Last Purchase Date', width: 200 },
+  { field: 'address', headerName: 'Address', type: 'text', width: 500 },
   { field: 'contact_number', headerName: 'Contact Number', width: 150 },
-  { field: 'employee_name', headerName: 'Employee Name', width: 150 },
-  { field: 'doctor_name', headerName: 'Doctor Name', width: 200 },
   { field: 'created_at', headerName: 'Created At', width: 150 },
   { field: 'updated_at', headerName: 'Updated At', width: 150 },
 ];
 
-const Customers = ({ customers, errors }) => {
+const Suppliers = ({ suppliers, errors }) => {
   const classes = useStyles();
-  const router = useRouter();
 
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
 
   if (errors) {
     return (
-      <Layout path="Customers">
-        <SEO title="Customers" faviconEmoji="🙋‍♂️" />
+      <Layout path="Suppliers">
+        <SEO title="Suppliers" faviconEmoji="🙋‍♂️" />
         <div className={classes.errorRoot}>
           <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
             Something went wrong!
@@ -89,33 +80,30 @@ const Customers = ({ customers, errors }) => {
   const parseDate = (date) => new Date(date).toDateString();
 
   const rows =
-    customers &&
-    customers.map((customer) => {
-      const { id, name, address, last_purchased_on, contact_number, employee_name, doctor_name, created_at, updated_at } = customer;
+    suppliers &&
+    suppliers.map((supplier) => {
+      const { id, name, address, contact_number, created_at, updated_at } = supplier;
 
       return {
         id,
         name,
         address,
-        last_purchased_on: parseDate(last_purchased_on),
         contact_number,
-        employee_name,
-        doctor_name,
         created_at: parseDate(created_at),
         updated_at: parseDate(updated_at),
       };
     });
 
-  if (!customers.length) {
+  if (!suppliers.length) {
     return (
-      <Layout path="Customers">
-        <SEO title="Customers" faviconEmoji="🙋‍♂️" />
-        <CustomersCreationDialog />
+      <Layout path="Manufacturers">
+        <SEO title="Manufacturers" faviconEmoji="🙋‍♂️" />
+        <SuppliersCreationDialog />
         <div className={classes.noDataRoot}>
           <Typography className={classes.noDataTitle} variant="h4" component="h4">
-            No customers yet! <br />
+            No suppliers yet! <br />
             <Typography className={classes.noDataSubtitle} variant="body1">
-              Go spread some word and attract customers.
+              Have a strong coffee with few suppliers to have them supply you things.
             </Typography>
           </Typography>
         </div>
@@ -124,18 +112,11 @@ const Customers = ({ customers, errors }) => {
   }
 
   return (
-    <Layout path="Customers">
-      <SEO title="Customers" faviconEmoji="🙋‍♂️" />
+    <Layout path="Suppliers">
+      <SEO title="Suppliers" faviconEmoji="🙋‍♂️" />
 
       <div className={classes.optionsRoot}>
-        {/* <CustomersCreationDialog /> */}
-        <EntityCreationDialog entity="customer" />
-        {showOptions && (
-          <>
-            <CustomersUpdationDialog data={editData} />
-            <CustomersDeletionDialog data={editData} />
-          </>
-        )}
+        <SuppliersCreationDialog />
       </div>
 
       <div className={classes.dataGridRoot}>
@@ -166,7 +147,7 @@ export async function getServerSideProps({ req, res }) {
     return { props: {} };
   }
 
-  const { hasErrors, entityData } = await fetchEntities('customers');
+  const { hasErrors, entityData } = await fetchEntities('suppliers');
 
   if (hasErrors) {
     return {
@@ -178,9 +159,9 @@ export async function getServerSideProps({ req, res }) {
 
   return {
     props: {
-      customers: entityData['customers'],
+      suppliers: entityData['suppliers'],
     },
   };
 }
 
-export default Customers;
+export default Suppliers;

@@ -2,11 +2,18 @@ const jwt = require('jsonwebtoken');
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const { JWT_SECRET } = require('../utils/config');
 
-const ensureAdminAuthentication = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1];
+    // const token = req.headers.authorization.split(' ')[1];
+    const token = req.cookies['_SID_'];
 
-    jwt.verify(token, JWT_SECRET);
+    if (!token) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ msg: ReasonPhrases.UNAUTHORIZED });
+    }
+
+    const user = jwt.verify(token, JWT_SECRET);
+
+    res.locals['user'] = user;
 
     next();
   } catch (err) {
@@ -20,4 +27,4 @@ const ensureAdminAuthentication = (req, res, next) => {
   }
 };
 
-module.exports = ensureAdminAuthentication;
+module.exports = verifyToken;

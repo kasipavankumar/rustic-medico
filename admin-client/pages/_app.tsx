@@ -43,9 +43,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     axios({
       method: 'GET',
       url: `${API_URL}/api/ping`,
+      withCredentials: true,
     })
       .then()
-      .catch();
+      .catch(console.error);
 
     const jssStyles = document.querySelector('#jss-server-side');
 
