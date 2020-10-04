@@ -9,7 +9,7 @@ interface IActionFabProps {
 }
 
 const ActionFab: FC<IActionFabProps> = ({ onClick, tooltipMessage, IconComponent }) => (
-  <div style={{ margin: '0 0 20px 0' }}>
+  <div className="action-button">
     <Tooltip title={tooltipMessage}>
       <Fab color="secondary" size="medium" onClick={onClick} disableFocusRipple>
         {IconComponent}

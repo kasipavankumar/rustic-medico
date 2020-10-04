@@ -9,7 +9,7 @@ interface ICreationFabProps {
 }
 
 const CreationFab: FC<ICreationFabProps> = ({ onClick, tooltipMessage }) => (
-  <div style={{ margin: '0 0 20px 0' }}>
+  <div className="action-button">
     <Tooltip title={tooltipMessage}>
       <Fab color="secondary" size="medium" onClick={onClick} disableFocusRipple>
         <Add />
