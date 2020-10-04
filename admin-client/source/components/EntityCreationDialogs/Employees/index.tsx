@@ -45,7 +45,7 @@ const EntityCreationForm: FC = () => {
         if (!postDataSuccess) {
           setSnackbar({
             show: true,
-            message: 'Could not post data',
+            message: 'Could not post data.',
           });
 
           return;
@@ -54,13 +54,13 @@ const EntityCreationForm: FC = () => {
         handleClose();
         setSnackbar({
           show: true,
-          message: `Added ${inputs.name}`,
+          message: `Added ${inputs.name}.`,
         });
         router.replace('/data/employees');
       } catch (err) {
         setSnackbar({
           show: true,
-          message: 'Could not post data',
+          message: 'Could not post data.',
         });
         console.log(err);
       }

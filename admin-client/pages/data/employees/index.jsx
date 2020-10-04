@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -5,11 +6,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
-import { EmployeeCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import EmployeeCreationForm from '../../../source/components/EntityCreationDialogs/Employees';
 import fetchEntities from '../../../source/utils/fetchEntities';
 import UpdationForm from '../../../source/components/EntityUpdationDialogs/Employees';
-import { useState } from 'react';
+import DeletionForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -104,7 +105,7 @@ const AllEmployees = ({ employees, errors }) => {
     return (
       <Layout path="Employees">
         <SEO title="Employees" faviconEmoji="👨‍💼" />
-        <EmployeeCreationDialog />
+        <EmployeeCreationForm />
         <div className={classes.noDataRoot}>
           <Typography className={classes.noDataTitle} variant="h4" component="h4">
             No employees yet! <br />
@@ -121,9 +122,15 @@ const AllEmployees = ({ employees, errors }) => {
     <Layout path="Employees">
       <SEO title="Employees" faviconEmoji="👨‍💼" />
 
-      {/* <EmployeeCreationDialog /> */}
-      <EmployeeCreationForm />
-      {showOptions && <UpdationForm dataToUpdate={editData} />}
+      <OptionsWrapper>
+        <EmployeeCreationForm />
+        {showOptions && (
+          <>
+            <UpdationForm dataToUpdate={editData} />
+            <DeletionForm entityName="employees" dataToDelete={editData} />
+          </>
+        )}
+      </OptionsWrapper>
 
       <div className={classes.dataGridRoot}>
         <DataGrid

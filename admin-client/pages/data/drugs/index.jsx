@@ -5,11 +5,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
-import { DrugsUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
-import { DrugsDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import fetchEntities from '../../../source/utils/fetchEntities';
 import DrugsCreationDialog from '../../../source/components/EntityCreationDialogs/Drugs';
 import DrugUpdateForm from '../../../source/components/EntityUpdationDialogs/Drugs';
+import DrugDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -49,13 +49,6 @@ const useStyles = makeStyles((theme) => ({
   optionsRoot: {
     display: 'flex',
     alignItems: 'center',
-    // '& div:first-child': {
-    //   marginBottom: '16px',
-    // },
-    // '& div:not(:first-child)': {
-    //   marginLeft: 15,
-    //   marginBottom: '16px',
-    // },
   },
 }));
 
@@ -93,8 +86,8 @@ export default function Drugs({ drugs, errors }) {
       medical_description,
       manufacturing_date: parseDate(manufacturing_date),
       expiry_date: parseDate(expiry_date),
-      manufacturer_name,
-      supplier_name,
+      manufacturer_name: manufacturer_name || '-',
+      supplier_name: supplier_name || '-',
       created_at: parseDate(created_at),
       updated_at: parseDate(updated_at),
     };
@@ -134,16 +127,15 @@ export default function Drugs({ drugs, errors }) {
     <Layout path="Drugs">
       <SEO title="Drugs" faviconEmoji="💊" />
 
-      <div className={classes.optionsRoot}>
+      <OptionsWrapper>
         <DrugsCreationDialog />
         {showOptions && (
           <>
-            {/* <DrugsUpdationDialog data={editData} /> */}
             <DrugUpdateForm dataToUpdate={editData} />
-            <DrugsDeletionDialog data={editData} />
+            <DrugDeleteForm entityName="drugs" dataToDelete={editData} />
           </>
         )}
-      </div>
+      </OptionsWrapper>
 
       <div className={classes.dataGridRoot}>
         <DataGrid

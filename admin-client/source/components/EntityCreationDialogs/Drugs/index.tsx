@@ -43,7 +43,7 @@ const DrugsCreationDialog: FC = () => {
         if (!postDataSuccess) {
           setSnackbar({
             show: true,
-            message: 'Could not post data',
+            message: 'Could not post data.',
           });
 
           return;
@@ -52,13 +52,13 @@ const DrugsCreationDialog: FC = () => {
         handleClose();
         setSnackbar({
           show: true,
-          message: `Added ${inputs.name}`,
+          message: `Added ${inputs.name}.`,
         });
-        router.replace('/data/customers');
+        router.replace('/data/drugs');
       } catch (err) {
         setSnackbar({
           show: true,
-          message: 'Could not post data',
+          message: 'Could not post data.',
         });
         console.log(err);
       }
@@ -91,7 +91,7 @@ const DrugsCreationDialog: FC = () => {
 
   return (
     <>
-      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new customer" />
+      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new drug" />
 
       <Dialog keepMounted TransitionComponent={Transition} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle title="drug" id="drug-creation-dialog" onClose={handleClose}>
