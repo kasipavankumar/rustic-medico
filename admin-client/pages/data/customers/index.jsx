@@ -6,7 +6,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../../source/components';
 import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
 import CustomerUpdateForm from '../../../source/components/EntityUpdationDialogs/Customers';
-import CustomerDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import CustomerDeleteForm from '../../../source/components/EntityDeletionForms/DeleteFormBase';
 import OptionsWrapper from '../../../source/components/core/Options';
 import { fetchEntities } from '../../../source/utils';
 
