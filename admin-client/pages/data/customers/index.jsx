@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
-import { useRouter } from 'next/router';
 
 import { Layout, SEO } from '../../../source/components';
-import { CustomersCreationDialog } from '../../../source/components/EntityCreationDialogs';
-import { CustomersUpdationDialog } from '../../../source/components/EntityUpdationDialogs';
-import { CustomersDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
+import CustomerUpdateForm from '../../../source/components/EntityUpdationDialogs/Customers';
+import CustomerDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import OptionsWrapper from '../../../source/components/core/Options';
 import { fetchEntities } from '../../../source/utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +67,6 @@ const columns = [
 
 const Customers = ({ customers, errors }) => {
   const classes = useStyles();
-  const router = useRouter();
 
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState({});
@@ -99,8 +97,8 @@ const Customers = ({ customers, errors }) => {
         address,
         last_purchased_on: parseDate(last_purchased_on),
         contact_number,
-        employee_name,
-        doctor_name,
+        employee_name: employee_name || '-',
+        doctor_name: doctor_name || '-',
         created_at: parseDate(created_at),
         updated_at: parseDate(updated_at),
       };
@@ -110,7 +108,7 @@ const Customers = ({ customers, errors }) => {
     return (
       <Layout path="Customers">
         <SEO title="Customers" faviconEmoji="🙋‍♂️" />
-        <CustomersCreationDialog />
+        <EntityCreationDialog entity="customer" />
         <div className={classes.noDataRoot}>
           <Typography className={classes.noDataTitle} variant="h4" component="h4">
             No customers yet! <br />
@@ -127,16 +125,15 @@ const Customers = ({ customers, errors }) => {
     <Layout path="Customers">
       <SEO title="Customers" faviconEmoji="🙋‍♂️" />
 
-      <div className={classes.optionsRoot}>
-        {/* <CustomersCreationDialog /> */}
+      <OptionsWrapper>
         <EntityCreationDialog entity="customer" />
         {showOptions && (
           <>
-            <CustomersUpdationDialog data={editData} />
-            <CustomersDeletionDialog data={editData} />
+            <CustomerUpdateForm dataToUpdate={editData} />
+            <CustomerDeleteForm entityName="customers" dataToDelete={editData} />
           </>
         )}
-      </div>
+      </OptionsWrapper>
 
       <div className={classes.dataGridRoot}>
         <DataGrid

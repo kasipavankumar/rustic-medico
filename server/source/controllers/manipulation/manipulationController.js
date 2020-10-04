@@ -39,8 +39,6 @@ class ManipulationController {
 
             const result = await pool.query(updateQuery, params);
 
-            console.log(result);
-
             if (result.rowCount === 0) {
                 return res.status(StatusCodes.BAD_REQUEST).json({ err: ReasonPhrases.BAD_REQUEST, msg: 'could not update' });
             }

@@ -6,6 +6,9 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../../source/components';
 import { fetchEntities } from '../../../source/utils';
 import SuppliersCreationDialog from '../../../source/components/EntityCreationDialogs/Suppliers';
+import SupplierUpdateForm from '../../../source/components/EntityUpdationDialogs/Suppliers';
+import SupplierDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -115,9 +118,15 @@ const Suppliers = ({ suppliers, errors }) => {
     <Layout path="Suppliers">
       <SEO title="Suppliers" faviconEmoji="🙋‍♂️" />
 
-      <div className={classes.optionsRoot}>
+      <OptionsWrapper>
         <SuppliersCreationDialog />
-      </div>
+        {showOptions && (
+          <>
+            <SupplierUpdateForm dataToUpdate={editData} />
+            <SupplierDeleteForm entityName="suppliers" dataToDelete={editData} />
+          </>
+        )}
+      </OptionsWrapper>
 
       <div className={classes.dataGridRoot}>
         <DataGrid

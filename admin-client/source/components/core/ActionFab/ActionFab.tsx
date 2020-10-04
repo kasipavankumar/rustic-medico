@@ -1,21 +1,21 @@
 import React, { FC } from 'react';
 import { Tooltip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
 
-interface ICreationFabProps {
+interface IActionFabProps {
   tooltipMessage?: string;
   onClick: () => void;
+  IconComponent: React.ReactNode;
 }
 
-const CreationFab: FC<ICreationFabProps> = ({ onClick, tooltipMessage }) => (
+const ActionFab: FC<IActionFabProps> = ({ onClick, tooltipMessage, IconComponent }) => (
   <div className="action-button">
     <Tooltip title={tooltipMessage}>
       <Fab color="secondary" size="medium" onClick={onClick} disableFocusRipple>
-        <Add />
+        {IconComponent}
       </Fab>
     </Tooltip>
   </div>
 );
 
-export default CreationFab;
+export default ActionFab;
