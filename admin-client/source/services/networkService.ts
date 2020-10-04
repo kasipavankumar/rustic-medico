@@ -7,6 +7,8 @@ const singularize = (word: string) => pluralize(word, 1);
 const buildGetEnpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/get/all`;
 const buildPostEndpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/add/one`;
 const buildUpdateEndpoint = (entityName: string) => `${API_URL}/api/admin/${entityName}/update/one`;
+const buildDeleteEndpoint = (entityName: string, id: string) => `${API_URL}/api/admin/${entityName}/delete/one?id=${id}`;
+
 const buildHeaders = () => ({
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -19,6 +21,20 @@ class NetworkService {
   constructor(entityName: string) {
     this.entityName = entityName;
   }
+
+  deleteDate = async (data: any): Promise<boolean> => {
+    try {
+      await axios({
+        method: 'DELETE',
+        url: buildDeleteEndpoint(this.entityName, data.id),
+        headers: buildHeaders(),
+      });
+
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 
   updateData = async (data: {}): Promise<boolean> => {
     try {
