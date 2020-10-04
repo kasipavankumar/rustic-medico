@@ -24,8 +24,6 @@ class NetworkService {
     try {
       const localEntityName = this.entityName === 'manufacturers' ? 'drug_manufacturer' : singularize(this.entityName);
 
-      console.log(data);
-
       await axios({
         method: 'PUT',
         url: buildUpdateEndpoint(this.entityName),
