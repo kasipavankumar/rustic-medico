@@ -85,10 +85,10 @@ const SupplierCreationForm: FC = () => {
 
   return (
     <>
-      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new manufacturer" />
+      <CreationFab onClick={handleClickOpen} tooltipMessage="Create a new supplier" />
 
       <Dialog keepMounted TransitionComponent={Transition} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle title="supplier" id="manufacturer-creation-dialog" onClose={handleClose}>
+        <DialogTitle title="supplier" id="supplier-creation-dialog" onClose={handleClose}>
           Create new supplier
         </DialogTitle>
 

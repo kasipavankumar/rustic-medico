@@ -6,6 +6,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../../source/components';
 import { fetchEntities } from '../../../source/utils';
 import SuppliersCreationDialog from '../../../source/components/EntityCreationDialogs/Suppliers';
+import SupplierUpdateForm from '../../../source/components/EntityUpdationDialogs/Suppliers';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -117,6 +118,7 @@ const Suppliers = ({ suppliers, errors }) => {
 
       <div className={classes.optionsRoot}>
         <SuppliersCreationDialog />
+        {showOptions && <SupplierUpdateForm dataToUpdate={editData} />}
       </div>
 
       <div className={classes.dataGridRoot}>

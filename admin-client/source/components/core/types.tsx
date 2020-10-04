@@ -18,7 +18,7 @@ export interface IEntityCreationFormProps {
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
   children: React.ReactNode;
-  title?: string;
+  tooltipMessage?: string;
   onClose: () => void;
 }
 

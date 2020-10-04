@@ -9,7 +9,7 @@ import { DrugsUpdationDialog } from '../../../source/components/EntityUpdationDi
 import { DrugsDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import fetchEntities from '../../../source/utils/fetchEntities';
 import DrugsCreationDialog from '../../../source/components/EntityCreationDialogs/Drugs';
-
+import DrugUpdateForm from '../../../source/components/EntityUpdationDialogs/Drugs';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -49,13 +49,13 @@ const useStyles = makeStyles((theme) => ({
   optionsRoot: {
     display: 'flex',
     alignItems: 'center',
-    '& div:first-child': {
-      marginBottom: '16px',
-    },
-    '& div:not(:first-child)': {
-      marginLeft: 15,
-      marginBottom: '16px',
-    },
+    // '& div:first-child': {
+    //   marginBottom: '16px',
+    // },
+    // '& div:not(:first-child)': {
+    //   marginLeft: 15,
+    //   marginBottom: '16px',
+    // },
   },
 }));
 
@@ -138,7 +138,8 @@ export default function Drugs({ drugs, errors }) {
         <DrugsCreationDialog />
         {showOptions && (
           <>
-            <DrugsUpdationDialog data={editData} />
+            {/* <DrugsUpdationDialog data={editData} /> */}
+            <DrugUpdateForm dataToUpdate={editData} />
             <DrugsDeletionDialog data={editData} />
           </>
         )}

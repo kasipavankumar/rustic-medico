@@ -6,6 +6,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Layout, SEO } from '../../../source/components';
 import { fetchEntities } from '../../../source/utils';
 import ManufacturerCreationDialog from '../../../source/components/EntityCreationDialogs/Manufacturers';
+import ManufacturerUpdateForm from '../../../source/components/EntityUpdationDialogs/Manufacturers';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -117,6 +118,7 @@ const Manufacturers = ({ manufacturers, errors }) => {
 
       <div className={classes.optionsRoot}>
         <ManufacturerCreationDialog />
+        {showOptions && <ManufacturerUpdateForm dataToUpdate={editData} />}
       </div>
 
       <div className={classes.dataGridRoot}>
@@ -148,7 +150,7 @@ export async function getServerSideProps({ req, res }) {
   }
 
   const { hasErrors, entityData } = await fetchEntities('manufacturers');
-  
+
   if (hasErrors) {
     return {
       props: {

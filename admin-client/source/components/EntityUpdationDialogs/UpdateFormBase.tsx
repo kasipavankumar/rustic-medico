@@ -91,14 +91,14 @@ const EntityUpdateForm: React.FC<IEntityUpdateFormProps> = ({ entityName, dataTo
 
       <FormContext.Provider value={{ variant: 'filled', handleInputChange: handleInputs, initialValues: _dataToUpdate }}>
         <Dialog keepMounted open={displayForm}>
-          <DialogTitle title="employee" id="employee-updation-form" onClose={closeForm}>
+          <DialogTitle tooltipMessage={`Cancel ${entityName} update process`} id={`${entityName}-update-form`} onClose={closeForm}>
             Edit {dataToUpdate.name}'s details
           </DialogTitle>
 
           <DialogContent dividers>{DialogContentComponent}</DialogContent>
 
           <DialogActions>
-            <Button color="primary" variant="contained" onClick={closeForm} disableElevation>
+            <Button color="primary" variant="text" onClick={closeForm} disableElevation>
               <Typography variant="button">Cancel</Typography>
             </Button>
             <Button color="primary" variant="contained" onClick={handleEmployeeUpdation} disableElevation>

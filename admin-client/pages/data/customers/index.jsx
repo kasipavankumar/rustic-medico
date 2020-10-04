@@ -10,6 +10,7 @@ import { CustomersUpdationDialog } from '../../../source/components/EntityUpdati
 import { CustomersDeletionDialog } from '../../../source/components/EntityDeletionDialogs';
 import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
 import { fetchEntities } from '../../../source/utils';
+import CustomerUpdateForm from '../../../source/components/EntityUpdationDialogs/Customers';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -132,7 +133,8 @@ const Customers = ({ customers, errors }) => {
         <EntityCreationDialog entity="customer" />
         {showOptions && (
           <>
-            <CustomersUpdationDialog data={editData} />
+            <CustomerUpdateForm dataToUpdate={editData} />
+            {/* <CustomersUpdationDialog data={editData} /> */}
             <CustomersDeletionDialog data={editData} />
           </>
         )}

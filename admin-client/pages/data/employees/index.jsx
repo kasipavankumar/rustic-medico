@@ -8,6 +8,8 @@ import { Layout, SEO } from '../../../source/components';
 import { EmployeeCreationDialog } from '../../../source/components/EntityCreationDialogs';
 import EmployeeCreationForm from '../../../source/components/EntityCreationDialogs/Employees';
 import fetchEntities from '../../../source/utils/fetchEntities';
+import UpdationForm from '../../../source/components/EntityUpdationDialogs/Employees';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'id', headerName: 'ID', hide: true },
   { field: 'name', headerName: 'Name', width: 200 },
   { field: 'contact_number', headerName: 'Contact Number', width: 150 },
   { field: 'address', headerName: 'Address', width: 300 },
@@ -62,13 +64,16 @@ const AllEmployees = ({ employees, errors }) => {
   const classes = useStyles();
   const router = useRouter();
 
+  const [showOptions, toggleShowOptions] = useState(false);
+  const [editData, setEditData] = useState({});
+
   const parseDate = (date) => new Date(date).toDateString();
 
   const rows = employees.map((employee, i) => {
-    const { name, contact_number, address, date_of_joining, shift, created_at, updated_at } = employee;
+    const { id, name, contact_number, address, date_of_joining, shift, created_at, updated_at } = employee;
 
     return {
-      id: i + 1,
+      id,
       name,
       contact_number,
       address,
@@ -118,9 +123,23 @@ const AllEmployees = ({ employees, errors }) => {
 
       {/* <EmployeeCreationDialog /> */}
       <EmployeeCreationForm />
+      {showOptions && <UpdationForm dataToUpdate={editData} />}
 
       <div className={classes.dataGridRoot}>
-        <DataGrid loading={!Boolean(rows.length)} rows={rows} columns={columns} pageSize={8} />
+        <DataGrid
+          loading={!Boolean(rows.length)}
+          rows={rows}
+          columns={columns}
+          pageSize={8}
+          onCellClick={(e) => {
+            setEditData(e.data);
+            if (editData.name === e.data.name) {
+              toggleShowOptions(!showOptions);
+            } else {
+              toggleShowOptions(true);
+            }
+          }}
+        />
       </div>
     </Layout>
   );
