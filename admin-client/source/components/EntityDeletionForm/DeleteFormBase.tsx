@@ -70,7 +70,6 @@ const DeleteFormBase: FC<IDeleteFormBaseProps> = ({ entityName, dataToDelete }) 
    * Reset component's state.
    */
   const resetState = () => {
-    // setDataToDelete(null);
     toggleShowDialog(false);
     setSnackbar(initialSnackbarState);
   };

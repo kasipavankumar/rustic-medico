@@ -32,8 +32,6 @@ class DeletionController {
 
             const result = await pool.query(query, params);
 
-            console.log(result);
-
             if (result.rowCount === 0) {
                 return res.status(StatusCodes.BAD_REQUEST).json({ msg: 'record does not exist' });
             }

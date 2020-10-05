@@ -7,7 +7,7 @@ import { Layout, SEO } from '../../../source/components';
 import { fetchEntities } from '../../../source/utils';
 import SuppliersCreationDialog from '../../../source/components/EntityCreationDialogs/Suppliers';
 import SupplierUpdateForm from '../../../source/components/EntityUpdationDialogs/Suppliers';
-import SupplierDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import SupplierDeleteForm from '../../../source/components/EntityDeletionForm';
 import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +72,12 @@ const Suppliers = ({ suppliers, errors }) => {
       <Layout path="Suppliers">
         <SEO title="Suppliers" faviconEmoji="🙋‍♂️" />
         <div className={classes.errorRoot}>
-          <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
+          <Typography
+            color="error"
+            className={classes.errorTitle}
+            variant="h2"
+            component="h2"
+          >
             Something went wrong!
           </Typography>
         </div>
@@ -85,7 +90,14 @@ const Suppliers = ({ suppliers, errors }) => {
   const rows =
     suppliers &&
     suppliers.map((supplier) => {
-      const { id, name, address, contact_number, created_at, updated_at } = supplier;
+      const {
+        id,
+        name,
+        address,
+        contact_number,
+        created_at,
+        updated_at,
+      } = supplier;
 
       return {
         id,
@@ -103,10 +115,15 @@ const Suppliers = ({ suppliers, errors }) => {
         <SEO title="Manufacturers" faviconEmoji="🙋‍♂️" />
         <SuppliersCreationDialog />
         <div className={classes.noDataRoot}>
-          <Typography className={classes.noDataTitle} variant="h4" component="h4">
+          <Typography
+            className={classes.noDataTitle}
+            variant="h4"
+            component="h4"
+          >
             No suppliers yet! <br />
             <Typography className={classes.noDataSubtitle} variant="body1">
-              Have a strong coffee with few suppliers to have them supply you things.
+              Have a strong coffee with few suppliers to have them supply you
+              things.
             </Typography>
           </Typography>
         </div>
@@ -123,7 +140,10 @@ const Suppliers = ({ suppliers, errors }) => {
         {showOptions && (
           <>
             <SupplierUpdateForm dataToUpdate={editData} />
-            <SupplierDeleteForm entityName="suppliers" dataToDelete={editData} />
+            <SupplierDeleteForm
+              entityName="suppliers"
+              dataToDelete={editData}
+            />
           </>
         )}
       </OptionsWrapper>

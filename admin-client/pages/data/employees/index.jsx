@@ -9,7 +9,7 @@ import { Layout, SEO } from '../../../source/components';
 import EmployeeCreationForm from '../../../source/components/EntityCreationDialogs/Employees';
 import fetchEntities from '../../../source/utils/fetchEntities';
 import UpdationForm from '../../../source/components/EntityUpdationDialogs/Employees';
-import DeletionForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import DeletionForm from '../../../source/components/EntityDeletionForm';
 import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({

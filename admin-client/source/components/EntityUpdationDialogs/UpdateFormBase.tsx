@@ -5,14 +5,22 @@ import Edit from '@material-ui/icons/Edit';
 
 import ActionFab from '../core/ActionFab';
 import SnackbarFeedback from '../core/SnackbarFeedback';
-import { DialogTitle, DialogContent, DialogActions } from '../core/Dialog/DialogBase';
+import {
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '../core/Dialog/DialogBase';
 
 import { IEntityUpdateFormProps } from './types';
 
 import NetworkService from '../../services/networkService';
 import { FormContext } from './UpdateFormContext';
 
-const EntityUpdateForm: React.FC<IEntityUpdateFormProps> = ({ entityName, dataToUpdate, DialogContentComponent }) => {
+const EntityUpdateForm: React.FC<IEntityUpdateFormProps> = ({
+  entityName,
+  dataToUpdate,
+  DialogContentComponent,
+}) => {
   const initialSnackbarState = {
     show: false,
     message: '',
@@ -31,6 +39,7 @@ const EntityUpdateForm: React.FC<IEntityUpdateFormProps> = ({ entityName, dataTo
   React.useEffect(() => {
     setDataToUpdate(dataToUpdate);
   }, [dataToUpdate]);
+
   /**
    * Only submit form if any of the inputs have change.
    */
@@ -87,21 +96,45 @@ const EntityUpdateForm: React.FC<IEntityUpdateFormProps> = ({ entityName, dataTo
 
   return (
     <>
-      <ActionFab IconComponent={<Edit />} tooltipMessage={`Edit ${dataToUpdate.name}'s details`} onClick={openForm} />
+      <ActionFab
+        IconComponent={<Edit />}
+        tooltipMessage={`Edit ${dataToUpdate.name}'s details`}
+        onClick={openForm}
+      />
 
-      <FormContext.Provider value={{ variant: 'filled', handleInputChange: handleInputs, initialValues: _dataToUpdate }}>
+      <FormContext.Provider
+        value={{
+          variant: 'filled',
+          handleInputChange: handleInputs,
+          initialValues: _dataToUpdate,
+        }}
+      >
         <Dialog keepMounted open={displayForm}>
-          <DialogTitle tooltipMessage={`Cancel ${entityName} update process`} id={`${entityName}-update-form`} onClose={closeForm}>
+          <DialogTitle
+            tooltipMessage={`Cancel ${entityName} update process`}
+            id={`${entityName}-update-form`}
+            onClose={closeForm}
+          >
             Edit {dataToUpdate.name}'s details
           </DialogTitle>
 
           <DialogContent dividers>{DialogContentComponent}</DialogContent>
 
           <DialogActions>
-            <Button color="primary" variant="text" onClick={closeForm} disableElevation>
+            <Button
+              color="primary"
+              variant="text"
+              onClick={closeForm}
+              disableElevation
+            >
               <Typography variant="button">Cancel</Typography>
             </Button>
-            <Button color="primary" variant="contained" onClick={handleEmployeeUpdation} disableElevation>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleEmployeeUpdation}
+              disableElevation
+            >
               <Typography variant="button">Update</Typography>
             </Button>
           </DialogActions>

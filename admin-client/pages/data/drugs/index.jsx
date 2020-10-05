@@ -8,7 +8,7 @@ import { Layout, SEO } from '../../../source/components';
 import fetchEntities from '../../../source/utils/fetchEntities';
 import DrugsCreationDialog from '../../../source/components/EntityCreationDialogs/Drugs';
 import DrugUpdateForm from '../../../source/components/EntityUpdationDialogs/Drugs';
-import DrugDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import DrugDeleteForm from '../../../source/components/EntityDeletionForm';
 import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +57,11 @@ const columns = [
   { field: 'name', headerName: 'Name', width: 200 },
   { field: 'price', headerName: 'Price (INR)', type: 'number', width: 150 },
   { field: 'image_link', headerName: 'Image Link', hide: true },
-  { field: 'medical_description', headerName: 'Medical Description', width: 350 },
+  {
+    field: 'medical_description',
+    headerName: 'Medical Description',
+    width: 350,
+  },
   { field: 'manufacturing_date', headerName: 'Manufacturing Date', width: 200 },
   { field: 'expiry_date', headerName: 'Expiry Date', width: 200 },
   { field: 'manufacturer_name', headerName: 'Manufacturer', width: 300 },
@@ -76,7 +80,19 @@ export default function Drugs({ drugs, errors }) {
   const parseDate = (date) => new Date(date).toDateString();
 
   const rows = drugs.map((drug, i) => {
-    const { id, name, price, medical_description, manufacturing_date, image_link, expiry_date, manufacturer_name, supplier_name, created_at, updated_at } = drug;
+    const {
+      id,
+      name,
+      price,
+      medical_description,
+      manufacturing_date,
+      image_link,
+      expiry_date,
+      manufacturer_name,
+      supplier_name,
+      created_at,
+      updated_at,
+    } = drug;
 
     return {
       id,
@@ -98,7 +114,12 @@ export default function Drugs({ drugs, errors }) {
       <Layout path="Drugs">
         <SEO title="Drugs" faviconEmoji="💊" />
         <div className={classes.errorRoot}>
-          <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
+          <Typography
+            color="error"
+            className={classes.errorTitle}
+            variant="h2"
+            component="h2"
+          >
             Something went wrong!
           </Typography>
         </div>
@@ -112,7 +133,11 @@ export default function Drugs({ drugs, errors }) {
         <SEO title="Drugs" faviconEmoji="💊" />
         <DrugsCreationDialog />
         <div className={classes.noDataRoot}>
-          <Typography className={classes.noDataTitle} variant="h4" component="h4">
+          <Typography
+            className={classes.noDataTitle}
+            variant="h4"
+            component="h4"
+          >
             No drugs yet! <br />
             <Typography className={classes.noDataSubtitle} variant="body1">
               Go ahead and add as many drugs as you want.
