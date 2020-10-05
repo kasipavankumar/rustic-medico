@@ -7,7 +7,7 @@ import { Layout, SEO } from '../../../source/components';
 import { fetchEntities } from '../../../source/utils';
 import ManufacturerCreationDialog from '../../../source/components/EntityCreationDialogs/Manufacturers';
 import ManufacturerUpdateForm from '../../../source/components/EntityUpdationDialogs/Manufacturers';
-import ManufacturerDeleteForm from '../../../source/components/EntityDeletionDialogs/DeleteFormBase';
+import ManufacturerDeleteForm from '../../../source/components/EntityDeletionForm';
 import OptionsWrapper from '../../../source/components/core/Options';
 
 const useStyles = makeStyles((theme) => ({
