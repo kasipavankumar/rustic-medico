@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { DataGrid } from '@material-ui/data-grid';
 
 import OptionsContainer from 'components/core/Options';
-import EntityDeletionForm from 'components/EntityDeletionForms';
+import EntityDeletionForm from 'components/EntityDeletionForm';
 
 import { useStyles } from './DataPageShell.styles';
 
