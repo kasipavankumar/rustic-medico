@@ -3,15 +3,32 @@ import { Tooltip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 
 interface IActionFabProps {
+  /**
+   * Enable / Disable tooltip.
+   */
+  tooltip?: boolean;
+  /**
+   * If tooltip is enabled, message to display.
+   */
   tooltipMessage?: string;
-  onClick: () => void;
+  /**
+   * Material Icon to embed in Fab.
+   */
   IconComponent: React.ReactNode;
+  /**
+   * Callback fired when Fab is clicked.
+   */
+  onClick: () => void;
 }
 
-const ActionFab: FC<IActionFabProps> = ({ onClick, tooltipMessage, IconComponent }) => (
+const ActionFab: FC<IActionFabProps> = ({
+  onClick,
+  tooltipMessage,
+  IconComponent,
+}) => (
   <div className="action-button">
-    <Tooltip title={tooltipMessage}>
-      <Fab color="secondary" size="medium" onClick={onClick} disableFocusRipple>
+    <Tooltip id="action-tooltip" title={tooltipMessage}>
+      <Fab id="action-fab" color="secondary" size="medium" onClick={onClick} disableFocusRipple>
         {IconComponent}
       </Fab>
     </Tooltip>
