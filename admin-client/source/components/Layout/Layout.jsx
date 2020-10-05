@@ -1,13 +1,24 @@
+import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Header';
-import styles from './Layout.module.scss';
+
+const styles = makeStyles(() => ({
+  container: {
+    fontFamily: 'inherit',
+    boxSizing: 'border-box',
+    height: '100%',
+    margin: '1.1rem',
+  },
+}));
 
 const Layout = ({ children, path }) => {
-    return (
-        <>
-            <Header path={path} />
-            <div className={styles.container}>{children}</div>
-        </>
-    );
+  const classes = styles();
+
+  return (
+    <>
+      <Header path={path} />
+      <div className={classes.container}>{children}</div>
+    </>
+  );
 };
 
 export default Layout;
