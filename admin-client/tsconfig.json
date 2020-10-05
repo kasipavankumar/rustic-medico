@@ -31,8 +31,6 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "source/components/EntityCreationDialogs/DrugsCreationDialog.jsx",
-        "pages/customers/index.jsx"
     ],
     "exclude": [
         "node_modules"

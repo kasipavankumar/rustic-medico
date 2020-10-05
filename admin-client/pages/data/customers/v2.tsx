@@ -3,6 +3,10 @@ import React, { FC } from 'react';
 import SEO from 'components/SEO';
 import Layout from 'components/Layout';
 import DataShell from 'components/DataPageShell';
+import OptionsContainer from 'components/core/Options';
+import EntityCreationForm from 'components/EntityCreationDialogs/Customers';
+import EntityUpdationForm from 'components/EntityUpdationDialogs/Customers';
+import EntityDeletionForm from 'components/EntityDeletionForm';
 
 import parseDate from 'utils/parseDate';
 import fetchEntities from 'utils/fetchEntities';
@@ -56,6 +60,9 @@ const CustomersV2: FC<ICustomersProps> = ({ customers, hasErrors }) => {
   return (
     <Layout path="Customers">
       <SEO title="Customers" faviconEmoji="🙋‍♂️" />
+      <OptionsContainer>
+        <EntityCreationForm />
+      </OptionsContainer>
       <DataShell
         entityName="customers"
         errors={{ hasErrors }}
