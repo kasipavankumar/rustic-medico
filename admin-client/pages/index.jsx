@@ -1,10 +1,12 @@
 import { Layout, SEO } from '../source/components';
 import HomepageLayout from '../source/layouts/Homepage';
+import SalesChart from '../source/components/SalesChart';
 
 function Home() {
   return (
     <Layout>
       <SEO title="home" />
+      <SalesChart />
       <HomepageLayout />
     </Layout>
   );

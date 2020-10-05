@@ -33,5 +33,6 @@ app.use('/api/admin/manufacturers', ensureAdminAuthentication, require('./routes
 app.use('/api/admin/suppliers', ensureAdminAuthentication, require('./routes/suppliers'));
 app.use('/api/admin/customers', ensureAdminAuthentication, require('./routes/customers'));
 app.use('/api/admin/doctors', ensureAdminAuthentication, require('./routes/doctors'));
+app.use('/api/admin/sales', ensureAdminAuthentication, require('./routes/sales'));
 
 module.exports = app;
