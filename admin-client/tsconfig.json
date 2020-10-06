@@ -10,6 +10,9 @@
             ],
             "services/*": [
                 "source/services/*"
+            ],
+            "hooks/*": [
+                "source/hooks/*"
             ]
         },
         "target": "es5",
