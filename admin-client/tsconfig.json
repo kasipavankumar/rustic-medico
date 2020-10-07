@@ -13,6 +13,9 @@
             ],
             "hooks/*": [
                 "source/hooks/*"
+            ],
+            "lib/*": [
+                "source/lib/*"
             ]
         },
         "target": "es5",
