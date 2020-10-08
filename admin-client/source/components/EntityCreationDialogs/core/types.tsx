@@ -7,7 +7,13 @@ import { styles } from './DialogBase';
 /**
  * Common types
  */
-export type EntityLike = 'drugs' | 'employees' | 'customers' | 'doctors' | 'manufacturers' | 'suppliers';
+export type EntityLike =
+  | 'drugs'
+  | 'employees'
+  | 'customers'
+  | 'doctors'
+  | 'manufacturers'
+  | 'suppliers';
 
 export interface IEntityCreationFormProps {
   entity: EntityLike;
@@ -19,6 +25,7 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
   children: React.ReactNode;
   title?: string;
+  closeTooltipMessage?: string;
   onClose: () => void;
 }
 
@@ -27,11 +34,11 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
  */
 export interface IEntityDependentsSelectionProps {
   entityName: EntityLike;
-  name: string;
-  value: any;
-  label: string;
-  variant: FormControlTypeMap['props']['variant'];
-  onChange: SelectProps['onChange'];
+  name?: string;
+  value?: any;
+  label?: string;
+  variant?: FormControlTypeMap['props']['variant'];
+  onChange?: SelectProps['onChange'];
 }
 
 export interface IEntityDataFetchResponse {
