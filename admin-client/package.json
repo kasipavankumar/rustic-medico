@@ -16,6 +16,7 @@
         "url": "https://github.com/kasipavankumar/rustic-medico/issues"
     },
     "scripts": {
+        "prebuild": "npm run clean",
         "build": "next build",
         "clean": "rm --recursive --verbose .next",
         "dev": "next dev",
