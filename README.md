@@ -6,6 +6,7 @@
 
 <br />
 
+![Deploy Server](https://github.com/kasipavankumar/rustic-medico/workflows/Deploy%20Server/badge.svg)
 ![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-F7B93E?logo=prettier&style=flat-square)
 ![Next.js](https://img.shields.io/badge/Framework-Next.js-000000?logo=next.js&style=flat-square)
 ![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&style=flat-square)
