@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/ping', require('./routes/ping'));
 
+app.use('/api/analytics', ensureAdminAuthentication, require('./routes/analytics'))
+
 app.use('/api/_auth', require('./routes/auth'))
 app.use('/api/admin/register', require('./routes/admin/register'));
 app.use('/api/admin/login', require('./routes/admin/login'));
