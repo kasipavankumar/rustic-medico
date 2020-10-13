@@ -16,6 +16,9 @@
             ],
             "lib/*": [
                 "source/lib/*"
+            ],
+            "common/*": [
+                "source/common/*"
             ]
         },
         "target": "es5",
