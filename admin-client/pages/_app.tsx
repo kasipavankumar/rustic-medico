@@ -9,9 +9,10 @@ import NProgress from 'nprogress';
 import axios from 'axios';
 
 import { AuthProvider } from '../source/providers/Auth';
+import { API_URL } from '../source/config';
 
 import 'nprogress/nprogress.css';
-import { API_URL } from '../source/config';
+import 'public/styles.css';
 
 NProgress.configure({
   showSpinner: false,
