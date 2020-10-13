@@ -19,6 +19,9 @@
             ],
             "common/*": [
                 "source/common/*"
+            ],
+            "public/*": [
+                "public/*"
             ]
         },
         "target": "es5",
