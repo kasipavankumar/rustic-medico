@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import api from 'lib/api';
+import request from 'common/api/request';
 
 /**
  * Hook to fetch entity data from API.
@@ -13,7 +13,7 @@ const useEntityData = (entityName: string) => {
 
   const fetchEntityData = async () => {
     try {
-      const { data } = await api.get(`/api/admin/${entityName}/get/all`);
+      const { data } = await request({ entity: entityName });
       setEntityData(data[entityName]);
     } catch (err) {
       setErrors(true);
