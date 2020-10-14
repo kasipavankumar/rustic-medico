@@ -1,8 +1,5 @@
 /**
  * Shell component for all the data pages.
- *
- * TODO:
- * 1. Generalize the entity creation & updation forms.
  */
 
 import React, { FC, useState } from 'react';
@@ -13,23 +10,11 @@ import OptionsContainer from 'components/core/Options';
 import EntityDeletionForm from 'components/EntityDeletionForm';
 
 import { useStyles } from './DataPageShell.styles';
-
-interface IDataPageErrors {
-  hasErrors: boolean;
-  message?: string;
-}
-
-interface IData {
-  hasData: boolean;
-  rows: any[];
-  columns: any[];
-}
-
-interface IDataPageShellProps {
-  entityName: string;
-  data: IData;
-  errors: IDataPageErrors;
-}
+import { IDataPageShellProps } from './DataPageShell.types';
+import {
+  LoadEntityCreationForm,
+  LoadEntityUpdationForm,
+} from './DataPageShell.utils';
 
 const DataPageShell: FC<IDataPageShellProps> = ({
   entityName,
@@ -76,12 +61,14 @@ const DataPageShell: FC<IDataPageShellProps> = ({
   return (
     <>
       <OptionsContainer>
+        {LoadEntityCreationForm(entityName)}
         {showOptions && (
           <>
             <EntityDeletionForm
               entityName={entityName}
               dataToDelete={dataToOperate}
             />
+            {LoadEntityUpdationForm(entityName, dataToOperate)}
           </>
         )}
       </OptionsContainer>
