@@ -26,7 +26,13 @@ const useStyles = makeStyles(() => ({
 const ITEM_HEIGHT = 48;
 
 function MenuLink({ link, text }) {
-  return <Link href={link}>{text}</Link>;
+  const classes = useStyles();
+
+  return (
+    <Link href={link}>
+      <a className={classes.link}>{text}</a>
+    </Link>
+  );
 }
 
 const Header = ({ path }) => {
@@ -64,14 +70,23 @@ const Header = ({ path }) => {
     <div className={classes.root}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
-          <Typography className={`${classes.title}`} variant="h6" color="inherit">
+          <Typography
+            className={`${classes.title}`}
+            variant="h6"
+            color="inherit"
+          >
             <Link href="/">
               <a className={classes.link}>Rustic Medico</a>
             </Link>
             {subPath}
           </Typography>
 
-          <IconButton edge="start" onClick={handleClick} color="inherit" aria-label="menu">
+          <IconButton
+            edge="start"
+            onClick={handleClick}
+            color="inherit"
+            aria-label="menu"
+          >
             <MenuIcon />
           </IconButton>
 
