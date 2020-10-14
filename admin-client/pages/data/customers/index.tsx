@@ -1,14 +1,32 @@
+/**
+ * TODO: Find a way to adjust columns dynamically according to data from API.
+ */
+
 import React, { useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, RowData } from '@material-ui/data-grid';
 
-import { Layout, SEO } from '../../../source/components';
-import EntityCreationDialog from '../../../source/components/EntityCreationDialogs/Customers';
-import CustomerUpdateForm from '../../../source/components/EntityUpdationDialogs/Customers';
-import CustomerDeleteForm from '../../../source/components/EntityDeletionForm';
-import OptionsWrapper from '../../../source/components/core/Options';
-import { fetchEntities } from '../../../source/utils';
+import Layout from 'components/Layout';
+import SEO from 'components/SEO';
+import EntityCreationDialog from 'components/EntityCreationDialogs/Customers';
+import CustomerUpdateForm from 'components/EntityUpdationDialogs/Customers';
+import CustomerDeleteForm from 'components/EntityDeletionForm';
+import OptionsWrapper from 'components/core/Options';
+import request from 'common/api/request';
+
+interface ICustomersData {
+  id: string;
+  name: string;
+  address: string;
+  last_purchased_on: string;
+  contact_number: string;
+  employee_name: string;
+  doctor_name: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -65,31 +83,58 @@ const columns = [
   { field: 'updated_at', headerName: 'Updated At', width: 150 },
 ];
 
-const Customers = ({ customers, errors }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  if (!req?.headers?.cookie) {
+    res.writeHead(307, { Location: '/login' });
+    res.end();
+    return { props: {} };
+  }
+
+  const { data } = await request({ entity: 'customers' });
+
+  return {
+    props: {
+      errors: !data,
+      customers: data ? data['customers'] : [],
+    },
+  };
+};
+
+const Customers = ({
+  customers,
+  errors,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const classes = useStyles();
 
   const [showOptions, toggleShowOptions] = useState(false);
-  const [editData, setEditData] = useState({});
+  const [editData, setEditData] = useState<ICustomersData>({
+    id: '',
+    name: '',
+    address: '',
+    last_purchased_on: '',
+    contact_number: '',
+    employee_name: '',
+    doctor_name: '',
+    created_at: '',
+    updated_at: '',
+  });
 
-  if (errors) {
-    return (
-      <Layout path="Customers">
-        <SEO title="Customers" faviconEmoji="🙋‍♂️" />
-        <div className={classes.errorRoot}>
-          <Typography color="error" className={classes.errorTitle} variant="h2" component="h2">
-            Something went wrong!
-          </Typography>
-        </div>
-      </Layout>
-    );
-  }
+  const parseDate = (date: string) => new Date(date).toDateString();
 
-  const parseDate = (date) => new Date(date).toDateString();
-
-  const rows =
+  const rows: ICustomersData[] =
     customers &&
-    customers.map((customer) => {
-      const { id, name, address, last_purchased_on, contact_number, employee_name, doctor_name, created_at, updated_at } = customer;
+    customers.map((customer: ICustomersData) => {
+      const {
+        id,
+        name,
+        address,
+        last_purchased_on,
+        contact_number,
+        employee_name,
+        doctor_name,
+        created_at,
+        updated_at,
+      } = customer;
 
       return {
         id,
@@ -104,13 +149,35 @@ const Customers = ({ customers, errors }) => {
       };
     });
 
+  if (errors) {
+    return (
+      <Layout path="Customers">
+        <SEO title="Customers" faviconEmoji="🙋‍♂️" />
+        <div className={classes.errorRoot}>
+          <Typography
+            color="error"
+            className={classes.errorTitle}
+            variant="h2"
+            component="h2"
+          >
+            Something went wrong!
+          </Typography>
+        </div>
+      </Layout>
+    );
+  }
+
   if (!customers.length) {
     return (
       <Layout path="Customers">
         <SEO title="Customers" faviconEmoji="🙋‍♂️" />
-        <EntityCreationDialog entity="customer" />
+        <EntityCreationDialog />
         <div className={classes.noDataRoot}>
-          <Typography className={classes.noDataTitle} variant="h4" component="h4">
+          <Typography
+            className={classes.noDataTitle}
+            variant="h4"
+            component="h4"
+          >
             No customers yet! <br />
             <Typography className={classes.noDataSubtitle} variant="body1">
               Go spread some word and attract customers.
@@ -126,11 +193,14 @@ const Customers = ({ customers, errors }) => {
       <SEO title="Customers" faviconEmoji="🙋‍♂️" />
 
       <OptionsWrapper>
-        <EntityCreationDialog entity="customer" />
+        <EntityCreationDialog />
         {showOptions && (
           <>
             <CustomerUpdateForm dataToUpdate={editData} />
-            <CustomerDeleteForm entityName="customers" dataToDelete={editData} />
+            <CustomerDeleteForm
+              entityName="customers"
+              dataToDelete={editData}
+            />
           </>
         )}
       </OptionsWrapper>
@@ -138,11 +208,11 @@ const Customers = ({ customers, errors }) => {
       <div className={classes.dataGridRoot}>
         <DataGrid
           loading={!rows.length}
-          rows={rows}
+          rows={rows as RowData[]}
           columns={columns}
           pageSize={10}
           onCellClick={(e) => {
-            setEditData(e.data);
+            setEditData(e.data as ICustomersData);
             if (editData.name === e.data.name) {
               toggleShowOptions(!showOptions);
             } else {
@@ -154,30 +224,5 @@ const Customers = ({ customers, errors }) => {
     </Layout>
   );
 };
-
-export async function getServerSideProps({ req, res }) {
-  // Redirect to login if not authenticated.
-  if (!req?.headers?.cookie) {
-    res.writeHead(307, { Location: '/login' });
-    res.end();
-    return { props: {} };
-  }
-
-  const { hasErrors, entityData } = await fetchEntities('customers');
-
-  if (hasErrors) {
-    return {
-      props: {
-        errors: true,
-      },
-    };
-  }
-
-  return {
-    props: {
-      customers: entityData['customers'],
-    },
-  };
-}
 
 export default Customers;
