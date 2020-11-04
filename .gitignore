@@ -10,6 +10,7 @@ node_modules
 # Admin Client
 admin-client/node_modules
 admin-client/.next
+admin-client/cypress/screenshots
 
 # Server
 server/node_modules
