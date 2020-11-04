@@ -5,7 +5,7 @@ import Layout from 'components/Layout';
 import DataShell from 'components/DataPageShell';
 
 import request from 'common/api/request';
-import parseDate from 'utils/parseDate';
+import { parseDate } from 'utils/index';
 
 interface ICustomersProps {
   customers: any[];

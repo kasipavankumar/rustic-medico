@@ -4,7 +4,7 @@ import SEO from 'components/SEO';
 import Layout from 'components/Layout';
 import DataShell from 'components/DataPageShell';
 
-import parseDate from 'utils/parseDate';
+import { parseDate } from 'utils/index';
 import fetchEntities from 'utils/fetchEntities';
 
 interface IEmployeesProps {
