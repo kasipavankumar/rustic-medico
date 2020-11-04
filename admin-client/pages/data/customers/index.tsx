@@ -4,10 +4,10 @@
 
 import React, { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DataGrid, RowData } from '@material-ui/data-grid';
 
+import { usePageStyles } from 'source/styles/Page.styles';
 import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import EntityCreationDialog from 'components/EntityCreationDialogs/Customers';
@@ -15,6 +15,8 @@ import CustomerUpdateForm from 'components/EntityUpdationDialogs/Customers';
 import CustomerDeleteForm from 'components/EntityDeletionForm';
 import OptionsWrapper from 'components/core/Options';
 import request from 'common/api/request';
+
+import { parseDate } from 'utils/index';
 
 interface ICustomersData {
   id: string;
@@ -28,49 +30,6 @@ interface ICustomersData {
   updated_at: string;
 }
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    minWidth: 650,
-  },
-  button: {
-    marginBottom: theme.spacing(2),
-  },
-  errorRoot: {
-    height: '100%',
-    textAlign: 'center',
-  },
-  errorTitle: {
-    fontSize: 28,
-    marginTop: '30vh',
-  },
-  errorSubtitle: {
-    marginTop: 10,
-  },
-  noDataRoot: {
-    height: '100%',
-    display: 'grid',
-    placeItems: 'center',
-    textAlign: 'center',
-  },
-  noDataTitle: {
-    fontSize: 26,
-    marginTop: '25vh',
-  },
-  noDataSubtitle: {
-    marginTop: 10,
-  },
-  dataGridRoot: {
-    // height: '550px',
-    height: '70vh',
-    maxHeight: '70vh',
-    width: '100%',
-  },
-  optionsRoot: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-}));
-
 const columns = [
   { field: 'id', headerName: 'ID', hide: true },
   { field: 'name', headerName: 'Name', width: 200 },
@@ -79,8 +38,8 @@ const columns = [
   { field: 'contact_number', headerName: 'Contact Number', width: 150 },
   { field: 'employee_name', headerName: 'Employee Name', width: 150 },
   { field: 'doctor_name', headerName: 'Doctor Name', width: 200 },
-  { field: 'created_at', headerName: 'Created At', width: 150 },
-  { field: 'updated_at', headerName: 'Updated At', width: 150 },
+  { field: 'created_at', headerName: 'Created At', width: 200 },
+  { field: 'updated_at', headerName: 'Updated At', width: 250 },
 ];
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -104,7 +63,7 @@ const Customers = ({
   customers,
   errors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const classes = useStyles();
+  const classes = usePageStyles();
 
   const [showOptions, toggleShowOptions] = useState(false);
   const [editData, setEditData] = useState<ICustomersData>({
@@ -118,8 +77,6 @@ const Customers = ({
     created_at: '',
     updated_at: '',
   });
-
-  const parseDate = (date: string) => new Date(date).toDateString();
 
   const rows: ICustomersData[] =
     customers &&
