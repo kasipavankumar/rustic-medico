@@ -40,35 +40,35 @@ export default function Homepage() {
           <MaterialCard
             title="👨‍💼 Employees"
             description="View and Manage all Employees"
-            link="/data/employees"
+            link="/data/employees/v3/"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <MaterialCard
             title="🙋‍♂️ Customers"
             description="View and Manage all Customers"
-            link="/data/customers"
+            link="/data/customers/"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <MaterialCard
             title="💊 Drugs"
             description="View and Manage all Drugs"
-            link="/data/drugs"
+            link="/data/drugs/"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <MaterialCard
             title="🏭 Manufacturers"
             description="View and Manage Manufacturers"
-            link="/data/manufacturers"
+            link="/data/manufacturers/"
           />
         </Grid>
         <Grid item xs>
           <MaterialCard
             title="🚚 Suppliers"
             description="View and Manage all Suppliers"
-            link="/data/suppliers"
+            link="/data/suppliers/"
           />
         </Grid>
       </Grid>
