@@ -1,4 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
+import { CircularProgress } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import SEO from 'components/SEO';
 import Layout from 'components/Layout';
@@ -6,8 +8,6 @@ import DataShell from 'components/DataPageShell';
 
 import { parseDate } from 'utils/index';
 import fetchEntities from 'utils/fetchEntities';
-import Typography from '@material-ui/core/Typography';
-import { CircularProgress } from '@material-ui/core';
 
 interface IEmployeesProps {
   employees: any[];
