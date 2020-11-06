@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from 'next/link';
+import { faviconEmojis, capitalizeFirstLetter } from 'utils/index';
 
 const useStyles = makeStyles({
   container: {
@@ -30,47 +31,25 @@ const useStyles = makeStyles({
   },
 });
 
+const suffixLink = (link: string, s: string) => `${link}/${s}`;
+
+const entityPageLinks = Object.keys(faviconEmojis).map((e) => (
+  <Grid item xs={12} sm={6} key={e}>
+    <MaterialCard
+      title={`${faviconEmojis[e]} ${capitalizeFirstLetter(e)}`}
+      description={`View and manage all ${e}`}
+      link={suffixLink(`/data/${e}`, 'v2')}
+    />
+  </Grid>
+));
+
 export default function Homepage() {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <MaterialCard
-            title="👨‍💼 Employees"
-            description="View and Manage all Employees"
-            link="/data/employees/v3/"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <MaterialCard
-            title="🙋‍♂️ Customers"
-            description="View and Manage all Customers"
-            link="/data/customers/v3/"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <MaterialCard
-            title="💊 Drugs"
-            description="View and Manage all Drugs"
-            link="/data/drugs/v3/"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <MaterialCard
-            title="🏭 Manufacturers"
-            description="View and Manage Manufacturers"
-            link="/data/manufacturers/v3/"
-          />
-        </Grid>
-        <Grid item xs>
-          <MaterialCard
-            title="🚚 Suppliers"
-            description="View and Manage all Suppliers"
-            link="/data/suppliers/v3/"
-          />
-        </Grid>
+        {entityPageLinks}
       </Grid>
     </div>
   );
