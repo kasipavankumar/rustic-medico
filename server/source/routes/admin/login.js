@@ -70,6 +70,9 @@ LoginRouter.post('/', async (req, res) => {
 
     return res.status(StatusCodes.OK).json({ message: 'logged in', token });
   } catch (err) {
+    
+    console.log(err);
+
     /**
      * Something went wrong with server.
      */
